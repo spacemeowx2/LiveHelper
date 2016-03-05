@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <title>{{=关注列表}}</title>
+    <link href="bootstrap-3.2.0/css/bootstrap.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="css/popup.css" />
+    <script src="js/translate.js"></script>
+    <script src="js/libs.js"></script>
+    <script src="js/jquery-2.2.0.min.js"></script>
+    <script src="bootstrap-3.2.0/js/bootstrap.js"></script>
+    <script src="js/subm.js"></script>
+    <script src="js/config.js"></script>
+    
+    <script src="js/popup.js"></script>
+</head>
+<body>
+<!--hidden-->
+<div class="hidden" id="templates">
+    <div class="site-loading">
+        <p style="text-align:center">
+            <img src="img/loading.gif" />
+            {{=数据加载中...}}
+        </p>
+    </div>
+    <div class="site-empty">
+        <p style="text-align:center">
+            {{=你关注的主播还没有开播}}
+        </p>
+    </div>
+    <div class="site-template">
+        <div class="site-header">
+            <p class="site-name"></p>
+        </div>
+        <li class="divider"></li>
+        <div class="site-items"></div>
+        <li class="divider"></li>
+    </div>
+    <div class="list-empty">
+        <p style="text-align:center">
+            {{=还没有启用的网站, 请到选项页启用}}
+        </p>
+    </div>
+    <div class="stream-item-template">
+        <div class="stream-item" data-url="http://baidu.cn/">
+            <img class="{{? = misc.preview  hidden}}">
+            <div>
+                <p class="stream-item-title">a123</p>
+                <span class="stream-item-time">已播2000分钟</span>
+                <span class="stream-item-nick">斗鱼丶你是sb啊</span>
+                <span class="stream-item-online">16.5万</span>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <li class="divider"></li>
+    </div>
+</div>
+<div id="list">
+</div>
+</body>
+</html>

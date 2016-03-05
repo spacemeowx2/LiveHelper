@@ -1,0 +1,65 @@
+html, body, * {
+    font-family: "Microsoft YaHei",Arial,Helvetica,sans-serif,"宋体";
+}
+body {
+    width: 400px;
+}
+.divider {
+    height: 1px;
+    overflow: hidden;
+    background-color: #E5E5E5;
+    
+}
+.site-template .site-header {
+    padding: 5px 0 5px 0;
+    cursor: pointer;
+}
+.site-template .site-header >* {
+    margin: 0 0 0 0;
+}
+.stream-item {
+    margin-top: 2px;
+    /*width: 400px;*/
+    height: 67px;
+    cursor: pointer;
+}
+.stream-item > img {
+    float: left;
+    width: 120px;
+    height: 67px;
+}
+.stream-item > div {
+    float: left;
+    padding-top: 8px;
+    padding-left: 5px;
+    width: 280px;
+}
+.stream-item > div > span {
+    display: block;
+    float: left;
+    color: #a0a0a0;
+    width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 12px
+}
+.stream-item .stream-item-time {
+    padding: 0 2px 0 20px;
+    background: url(../img/head_ricon.png) 0 -145px no-repeat
+}
+.stream-item .stream-item-nick {
+    padding: 0 2px 0 18px;
+    background: url(../img/head_ricon.png) 0 -29px no-repeat;
+    width: 110px
+}
+.stream-item .stream-item-online {
+    padding-left: 18px;
+    background: url(../img/head_ricon.png) 0 -48px no-repeat;
+    width: 60px
+}
+.stream-item .stream-item-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

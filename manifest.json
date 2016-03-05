@@ -1,0 +1,35 @@
+{
+    "manifest_version": 2,
+    
+    "default_locale": "zh_CN",
+    "name": "__MSG_extName__",
+    "description": "__MSG_extDescription__",
+    "version": "0.1.0",
+    "options_page": "options.html",
+    
+    "icons":{"256":"icon.png"},
+    
+    "browser_action": {
+        "default_icon": "icon.png",
+        "default_popup": "popup.html"
+    },
+	
+	"background": {
+		"page": "background.html"
+	},
+
+    "permissions": [
+        "cookies",
+        "notifications",
+		"webRequest",
+		"webRequestBlocking",
+        "http://*/",
+        "https://*/",
+		"background"
+    ],
+
+    "web_accessible_resources": [
+        "icon.png",
+		"*://*"
+    ]
+}
