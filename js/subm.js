@@ -285,7 +285,6 @@
 					img: item.find('img').attr('data-src'),
 					url: 'http://www.huomaotv.cn' + item.find('dl.VOD_title > dt > a').attr('href')
 				}));
-				console.log(result);
 				resolve(result);
 			}));
 		}
