@@ -266,6 +266,30 @@
                 }));
             })
     };
+	
+	var huomao = siteFactory('huomao', '火猫', 'http://www.huomaotv.cn',
+        'http://www.huomaotv.cn/member/sub',
+        'GET', {},
+        result => {
+			return parseHTML(result, dom => new Promise(function (resolve, reject) {
+				let result = $(dom).find('div.userDy_cont').children();
+				result = result.toArray();
+				result = result.map(item => $(item));
+				result = result.filter(item => item.find('a.up_offline').length == 0);
+				result = result.map(item => ({
+					id: item.find('dl.VOD_title > dt > a').attr('href'),
+					title: item.find('dl.VOD_title > dt > a').text(),
+					beginTime: false,
+					nick: item.find('dl.VOD_title > dd > a').text(),
+					online: parseInt(item.find('dl.VOD_title > dd > span').text()),
+					img: item.find('img').attr('data-src'),
+					url: 'http://www.huomaotv.cn' + item.find('dl.VOD_title > dt > a').attr('href')
+				}));
+				console.log(result);
+				resolve(result);
+			}));
+		}
+    );
     
     douyu.getFullFollowList = () => {
         let getInfoFromItem = (item) => {
@@ -345,7 +369,7 @@
     };
     //bili.getFullFollowList = false;
     
-    window.fetchers = [douyu, panda, zhanqi, huya, bili, quanmin, niconico, twitch];
+    window.fetchers = [douyu, panda, zhanqi, huya, bili, quanmin, niconico, twitch, huomao];
     window.enabledFetchers = () => {
         let cacheConfig = config();
         return fetchers.filter( (i) => cacheConfig['enabled.' + i.id] );
