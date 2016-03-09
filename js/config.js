@@ -14,7 +14,7 @@ let options = [
     },
 	{
         key: 'misc.inject',
-        name: '=使用无礼物显示的播放器(仅支持熊猫tv)',
+        name: '=使用无礼物显示的播放器',
         defValue: false,
         type: 'checkbox'
     },
