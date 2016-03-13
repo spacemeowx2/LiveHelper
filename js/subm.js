@@ -2,7 +2,7 @@
     'use strict'
     let $p = function (jqobj) {
         return new Promise(function (resolve, reject) {
-            jqobj.promise().done(resolve).fail(reject);
+            jqobj.promise().done(resolve, reject);
         });
     }
     let getCookie = function (opt) {
