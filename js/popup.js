@@ -53,56 +53,61 @@
         }
         node.appendTo(s);
     }
+    function initTemplate() {
+        let clickListener = e=>window.open($(e.currentTarget).data('url'));
+        $('.stream-item').click(clickListener);
+        $('.site-header .site-name').click(clickListener);
+    }
+    function initList() {
+        if (!config('misc.preview')) {
+            $(document.body).width(400-120);
+        }
+        $('#list').empty();
+        
+        let allSite = [];
+        for (let fetcher of enabledFetchers()) {
+            let siteNode = addSite(fetcher);
+            
+            let thisSite = fetcher.getFollowList()
+            .then( l => {
+                //sort
+                return l.sort( (a, b) => b.online - a.online );
+            })
+            .then( l => {
+                siteNode.find('.site-items').empty();
+                if (l.length > 0) {
+                    for (let i of l) {
+                        appendStreamItem(siteNode, i);
+                    }
+                } else {
+                    siteNode.find('.site-items').append($('#templates .site-empty').clone());
+                    siteNode.appendTo($('#list')); // to bottom
+                }
+            })
+            .catch( (e) => {
+                console.log(fetcher.name+' error '+e);
+                siteNode.find('.site-items').empty();
+                siteNode.appendTo($('#list'));
+            });
+            allSite.push(thisSite);
+        }
+        
+        Promise.all(allSite).then(() => {
+            //$('#list').sort((a,b) => ($(a).children().length - $(b).children().length) );
+            
+        });
+        
+        if (enabledFetchers().length == 0) {
+            var node = $('#templates .list-empty').clone(true);
+            node.appendTo($('#list'));
+        }
+    }
     $(document).ready(function () {
         translate(config())
         .then((transText)=>{
             window._ = transText;
-            
-            if (!config('misc.preview')) {
-                $(document.body).width(400-120);
-            }
-            
-            let clickListener = e=>window.open($(e.currentTarget).data('url'));
-            $('.stream-item').click(clickListener);
-            $('.site-header .site-name').click(clickListener);
-            
-            let allSite = [];
-            for (let fetcher of enabledFetchers()) {
-                let siteNode = addSite(fetcher);
-                
-                let thisSite = fetcher.getFollowList()
-                .then( l => {
-                    //sort
-                    return l.sort( (a, b) => b.online - a.online );
-                })
-                .then( l => {
-                    siteNode.find('.site-items').empty();
-                    if (l.length > 0) {
-                        for (let i of l) {
-                            appendStreamItem(siteNode, i);
-                        }
-                    } else {
-                        siteNode.find('.site-items').append($('#templates .site-empty').clone());
-                        siteNode.appendTo($('#list')); // to bottom
-                    }
-                })
-                .catch( (e) => {
-                    console.log(fetcher.name+' error '+e);
-                    siteNode.find('.site-items').empty();
-                    siteNode.appendTo($('#list'));
-                });
-                allSite.push(thisSite);
-            }
-			
-            Promise.all(allSite).then(() => {
-                //$('#list').sort((a,b) => ($(a).children().length - $(b).children().length) );
-                
-            });
-			
-			if (enabledFetchers().length == 0) {
-				var node = $('#templates .list-empty').clone(true);
-				node.appendTo($('#list'));
-			}
-        });
+        })
+        .then(initTemplate)
+        .then(initList);
     });
 //})();

@@ -30,6 +30,6 @@
 		);
 		
 	}, () => {
-		console.log('»ñÈ¡tableÊ§°Ü.');
+		console.log('è·å–tableå¤±è´¥.');
 	});
 })();
