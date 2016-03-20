@@ -24,6 +24,7 @@
     
     function addSite(site) {
         var node = $('#templates .site-template').clone(true);
+        node.data('id', site.id);
         node.find('.site-name').text(site.name);
         node.find('.site-name').data('url', site.homepage);
         node.find('.site-items').empty();
@@ -57,6 +58,48 @@
         let clickListener = e=>window.open($(e.currentTarget).data('url'));
         $('.stream-item').click(clickListener);
         $('.site-header .site-name').click(clickListener);
+        //drag
+        var movingNode;
+        $('#templates > .site-template .site-header').mousedown(function () {
+            var self = $(this);
+            movingNode = self.parent();
+            self.data('move', true);
+            self.data('x', self.offset().left);
+            self.data('y', self.offset().top);
+        });
+        
+        $(document).mousemove(function (e) {
+            var mt = e.clientY;
+            if ((!movingNode) || (mt < 0)) {
+                return;
+            }
+            //movingNode.find('.stream-item-template').animate({height:'0'});
+            var self = movingNode;
+            var curIndex = -1;
+            var list = $('#list').children();
+            $.each(list, function (i, node) {
+                node = $(node);
+                var t = node.offset().top, h = node.height();
+                if ((t-h/2 < mt) && (mt <= t+h/2)) {
+                    curIndex = i;
+                    return false;
+                }
+            });
+            if (curIndex == -1) {
+                movingNode.appendTo($('#list'));
+            } else {
+                movingNode.insertBefore($(list[curIndex]));
+            }
+            return false;
+        })
+        .mouseup(function () {
+            //movingNode.find('.stream-item-template').animate({height:'67px'});
+            movingNode = false;
+            var idList = $.map($('#list').children(), node => $(node).data('id') );
+            //console.log(idList);
+            localStorage.idList = JSON.stringify(idList);
+            //$('#list .stream-item-template').show();
+        });;
     }
     function initList() {
         if (!config('misc.preview')) {

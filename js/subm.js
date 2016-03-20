@@ -371,6 +371,25 @@
     window.fetchers = [douyu, panda, zhanqi, huya, bili, quanmin, niconico, twitch, huomao];
     window.enabledFetchers = () => {
         let cacheConfig = config();
-        return fetchers.filter( (i) => cacheConfig['enabled.' + i.id] );
+        let list = fetchers.filter( (i) => cacheConfig['enabled.' + i.id] );
+        let moveToTop = (list, id) => {
+            let idx;
+            for (let i=0; i<list.length; i++) {
+                if (list[i].id == id) {
+                    idx = i;
+                    break;
+                }
+            }
+            if (idx) {
+                list.unshift(list.splice(idx, 1)[0]);
+            }
+        };
+        try {
+            let idList = JSON.parse(localStorage.idList);
+            for (let id of idList.reverse()) {
+                moveToTop(list, id);
+            }
+        } catch(e) {}
+        return list;
     };
 })();
