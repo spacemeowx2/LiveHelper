@@ -10,6 +10,9 @@ body {
     background-color: #E5E5E5;
     
 }
+.site-template {
+    background-color: #ffffff; 
+}
 .site-template .site-header {
     padding: 5px 0 5px 0;
     cursor: pointer;
@@ -22,6 +25,7 @@ body {
     /*width: 400px;*/
     height: 67px;
     cursor: pointer;
+    overflow: hidden;
 }
 .stream-item > img {
     float: left;
