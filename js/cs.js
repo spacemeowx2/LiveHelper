@@ -17,11 +17,11 @@ function myAjax(p, id) {
     var settings = p;
     $.ajax(settings)
     .done(function () {
-        console.log('done')
+        //console.log('done')
         sendMessage({id: id, act: 'suc', body: toJSONObj(arguments) });
     })
     .fail(function () {
-        console.log('failed');
+        //console.log('failed');
         sendMessage({id: id, act: 'fail', body: toJSONObj(arguments) });
     });
 }
@@ -38,6 +38,9 @@ self.port.on('reload', function () {
     ev.initEvent('DOMContentLoaded', false, true);
     unsafeWindow.dispatchEvent(ev);*/
     unsafeWindow.initList()
+});
+self.port.on('portRecv', function (p) {
+    sendMessage(p)
 });
 
 exportFunction(myAjax, unsafeWindow, {defineAs: "myAjax"});
