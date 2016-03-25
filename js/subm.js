@@ -43,8 +43,8 @@
             }
         }
     }
-    var douyu = siteFactory('douyu', '斗鱼', 'http://www.douyutv.com',
-        'http://www.douyutv.com/member/cp/get_follow_list',
+    var douyu = siteFactory('douyu', '斗鱼', 'http://www.douyu.com',
+        'http://www.douyu.com/member/cp/get_follow_list',
         'POST', {}, 
         result => {
             result = JSON.parse(result);
@@ -56,7 +56,7 @@
                     nick: i.nickname,
                     online: i.online,
                     img: i.room_src,
-                    url: 'http://www.douyutv.com' + i.url
+                    url: 'http://www.douyu.com' + i.url
                 })
             );
             return result;
@@ -312,10 +312,10 @@
                 nick: item.find('span.username').text().trim(),
                 online: parseInt(item.find('span.glyphicon01_hot').text().trim()),
                 img: item.find('img').data('original'),
-                url: 'http://www.douyutv.com/' + roomid
+                url: 'http://www.douyu.com/' + roomid
             };
         };
-        return $p($.get('http://www.douyutv.com/room/follow'))
+        return $p($.get('http://www.douyu.com/room/follow'))
             .then(text => parseHTML(text, dom => new Promise(function (resolve, reject) {
                 let followedList = $(dom).find('.attention > ul');
                 if (followedList.length == 0) {
@@ -373,14 +373,14 @@
         let cacheConfig = config();
         let list = fetchers.filter( (i) => cacheConfig['enabled.' + i.id] );
         let moveToTop = (list, id) => {
-            let idx;
+            let idx = false;
             for (let i=0; i<list.length; i++) {
                 if (list[i].id == id) {
                     idx = i;
                     break;
                 }
             }
-            if (idx) {
+            if (idx != false) {
                 list.unshift(list.splice(idx, 1)[0]);
             }
         };
