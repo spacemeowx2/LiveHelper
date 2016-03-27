@@ -226,7 +226,7 @@
                     type: 'GET',
                     url: 'http://api.twitch.tv/api/me',
                     headers: {
-                        'Twitch-Api-Token': 'aac161a4063326b304ac12ef4decc249'
+                        'Twitch-Api-Token': apiToken
                     }
                 };
                 return settings;
