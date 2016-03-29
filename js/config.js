@@ -19,6 +19,12 @@ let options = [
         type: 'checkbox'
     },
     {
+        key: 'misc.hidenoticewhenrun',
+        name: '=启动时不提醒',
+        defValue: true,
+        type: 'checkbox'
+    },
+    {
         key: 'misc.queryinterval',
         name: '=后台查询间隔', //后台查询间隔
         defValue: 5,

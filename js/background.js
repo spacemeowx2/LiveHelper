@@ -20,9 +20,10 @@
             }, () => false
         );
     }
-    function goOffline() {
-        
+    function goOffline(item) {
+        chrome.notifications.clear(item.id);
     }
+    let isFirst = true;
     function startMonitor() {
         console.log(config('misc.notice'));
         if (!config('misc.notice')) {
@@ -53,11 +54,16 @@
         })
         .then(items => {
             let lastStatusBackup = lastStatus;
+            let onlineItems = [];
             cachedItems = items;
             for (let item of items) {
                 if (!isLastOnline(item.id)) { //刚在线
-                    goOnline(item);
+                    //goOnline(item);
+                    onlineItems.push(item);
                 }
+            }
+            for (let id of Object.keys(lastStatus)) {
+                lastStatus[id]
             }
             lastStatus = {};
             for (let item of items) {
@@ -72,6 +78,18 @@
                 }
             }
             console.log('errors: ', errorList);
+            return onlineItems;
+        })
+        .then( (onlineItems) => {
+            if (isFirst) {
+                isFirst = false;
+                if (config('misc.hidenoticewhenrun')) {
+                    return;
+                }
+            }
+            for (let item of onlineItems) {
+                goOnline(item);
+            }
         })
         .then( () => 
             setTimeout(startMonitor, parseInt(config('misc.queryinterval')) * 60 * 1000)
