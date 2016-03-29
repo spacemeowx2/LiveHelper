@@ -1,5 +1,6 @@
 (function (){
     'use strict'
+    $.ajaxSetup({timeout: 5000});
     let $p = function (jqobj) {
         return new Promise(function (resolve, reject) {
             jqobj.promise().then(resolve, reject);
@@ -26,7 +27,7 @@
             getFullFollowList: false,
             getDefaultFollowList: function () {
                 return $p($.ajax({
-                    timeout: 5000,
+                    //timeout: 5000,
                     url: url,
                     type: type,
                     data: data
@@ -290,8 +291,26 @@
 		}
     );
     
+    var longzhu = siteFactory('longzhu', '龙珠', 'http://longzhu.com/',
+        'http://userapi.plu.cn/subinfo/mysubscribe?pageIndex=0&pageSize=10',
+        'GET', {stamp: Math.random(), pageIndex: 0, pageSize: 10},
+        result => {
+            result = result.items;
+            result = result.filter(i => i.feed);
+            result = result.map(i => ({
+                id: i.room.roomId,
+                title: i.feed.title,
+                beginTime: new Date(i.feed.time).getTime(),
+                nick: i.room.name,
+                online: false,
+                img: 'http://img.plures.net/live/screenshots/'+i.room.roomId+'/0.jpg',
+                url: 'http://longzhu.com/'+i.feed.url
+            }));
+            return result;
+        });
+    
     douyu.getFullFollowList = () => {
-        let getInfoFromItem = (item) => {
+        let getInfoFromItem = function (item) {
             item = $(item);
             if (item.find('i.icon_live').length == 0)
                 return false;
@@ -368,7 +387,7 @@
     };
     //bili.getFullFollowList = false;
     
-    window.fetchers = [douyu, panda, zhanqi, huya, bili, quanmin, niconico, twitch, huomao];
+    window.fetchers = [douyu, panda, zhanqi, huya, bili, quanmin, niconico, twitch, huomao, longzhu];
     window.enabledFetchers = () => {
         let cacheConfig = config();
         let list = fetchers.filter( (i) => cacheConfig['enabled.' + i.id] );
