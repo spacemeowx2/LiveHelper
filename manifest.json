@@ -4,7 +4,7 @@
     "default_locale": "zh_CN",
     "name": "__MSG_extName__",
     "description": "__MSG_extDescription__",
-    "version": "0.1.5",
+    "version": "0.1.6",
     "options_page": "options.html",
     
     "icons": {
@@ -33,5 +33,12 @@
     "web_accessible_resources": [
         "icon.png",
 		"*://*"
+    ],
+    
+    "content_scripts": [
+        {
+            "matches": ["http://www.douyu.com/*"],
+            "js": ["js/pcs.js"]
+        }
     ]
 }
