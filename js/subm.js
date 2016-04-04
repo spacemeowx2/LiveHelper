@@ -304,7 +304,7 @@
                 nick: i.room.name,
                 online: false,
                 img: 'http://img.plures.net/live/screenshots/'+i.room.roomId+'/0.jpg',
-                url: 'http://longzhu.com/'+i.feed.url
+                url: 'http://star.longzhu.com'+i.feed.url
             }));
             return result;
         });
