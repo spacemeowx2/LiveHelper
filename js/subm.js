@@ -292,7 +292,7 @@
     );
     
     var longzhu = siteFactory('longzhu', '龙珠', 'http://longzhu.com/',
-        'http://userapi.plu.cn/subinfo/mysubscribe?pageIndex=0&pageSize=10',
+        'http://userapi.plu.cn/subinfo/mysubscribe',
         'GET', {stamp: Math.random(), pageIndex: 0, pageSize: 10},
         result => {
             result = result.items;

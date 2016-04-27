@@ -25,9 +25,19 @@
         "notifications",
 		"webRequest",
 		"webRequestBlocking",
-        "http://*/",
-        "https://*/",
-		"background"
+		"background",
+        "http://www.douyu.com/*",
+        "http://www.panda.tv/*",
+        "http://www.zhanqi.tv/*",
+        "http://i.huya.com/*",
+        "http://live.bilibili.com/*",
+        "http://live.nicovideo.jp/*",
+        "http://www.twitch.tv/*",
+        "http://api.twitch.tv/*",
+        "https://streams.twitch.tv/*",
+        "http://www.huomaotv.cn/*",
+        "http://userapi.plu.cn/*",
+        "https://imspace.applinzi.com/*"
     ],
 
     "web_accessible_resources": [
