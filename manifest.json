@@ -4,7 +4,7 @@
     "default_locale": "zh_CN",
     "name": "__MSG_extName__",
     "description": "__MSG_extDescription__",
-    "version": "0.1.7",
+    "version": "0.1.8",
     "options_page": "options.html",
     
     "icons": {
@@ -26,20 +26,31 @@
 		"webRequest",
 		"webRequestBlocking",
 		"background",
-        "http://www.douyu.com/*",
-        "http://www.panda.tv/*",
-        "http://www.zhanqi.tv/*",
-        "http://i.huya.com/*",
-        "http://live.bilibili.com/*",
-        "http://live.nicovideo.jp/*",
-        "http://www.twitch.tv/*",
-        "http://api.twitch.tv/*",
-        "https://streams.twitch.tv/*",
-        "http://www.huomaotv.cn/*",
+        "http://*.douyu.com/*",
+        "http://*.panda.tv/*",
+        "http://*.zhanqi.tv/*",
+        "http://*.huya.com/*",
+        "http://*.bilibili.com/*",
+        "http://*.nicovideo.jp/*",
+        "http://*.twitch.tv/",
+        "https://*.twitch.tv/*",
+        "http://*.huomaotv.cn/*",
         "http://userapi.plu.cn/*",
-        "https://imspace.applinzi.com/*"
+        "http://*.quanmin.tv/*",
+        "https://*.nicovideo.jp/*",
+        
+        "https://imspace.applinzi.com/*",
+        
+        "http://*.douyucdn.cn/*",
+        "http://*.pdim.gs/*",
+        "http://*.hdslb.com/*",
+        "http://*.plures.net/*",
+        "http://*.dwstatic.com/*",
+        "http://*.jtvnw.net/*",
+        "https://*.jtvnw.net/*",
+        "http://*.nimg.jp/*"
     ],
-
+    
     "web_accessible_resources": [
         "icon.png",
 		"*://*"

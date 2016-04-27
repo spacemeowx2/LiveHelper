@@ -185,9 +185,13 @@
         'GET', {},
         html => {
             let getInfoFromItem = (item) => {
+                let re = /watch\/([^?]+).*$/;
                 item = $(item);
                 let url = item.children('a').attr('href');
-                let roomid = /watch\/([^?]+).*$/.exec(url)[1];
+                if (!re.test(url)) {
+                    return;
+                }
+                let roomid = re.exec(url)[1];
                 let startTime = item.find('p[class="start_time"]').text();
                 startTime = startTime.replace(/(開始)|(Starts:)/, '').trim();
                 startTime = new Date(startTime);
@@ -203,7 +207,7 @@
                 };
             };
             return parseHTML(html, (dom) => new Promise(function (resolve, reject) {
-                let itemArray = $.makeArray($(dom).find('#Favorite_list .liveItem'));
+                let itemArray = $.makeArray($(dom).find('#Favorite_list .liveItem_ch'));
                 itemArray = itemArray.map(getInfoFromItem);
                 resolve(itemArray.filter(i => i));
             }))
