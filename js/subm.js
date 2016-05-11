@@ -11,6 +11,13 @@
             chrome.cookies.getAll(opt, resolve);
         });
     }
+    let decodeHTMLEntry = function(s) {
+        var converter = document.createElement("DIV"); 
+        converter.innerHTML = s; 
+        var output = converter.innerText; 
+        converter = null; 
+        return output; 
+    }
     function siteFactory(id, name, homepage, url, type, data, f) {
         return {
             getFollowList: function () {
@@ -109,13 +116,13 @@
             result = result.s;
             result = result.filter( i => i.isLive);
             result = result.map( (i) => ({
-                    id: i.privateHost,
+                    id: i.yyid,//i.privateHost,
                     title: $('<span>'+i.intro+'</span>').text(),
                     beginTime: (new Date).getTime() - i.startTime * 1000 * 60,
                     nick: i.nick,
                     online: i.total_count,
                     img: i.screenshort,
-                    url: 'http://www.huya.com/' + i.privateHost
+                    url: 'http://www.huya.com/' + i.yyid//i.privateHost
                 })
             );
             return result;
@@ -373,7 +380,7 @@
                     t = t.data;
                     return {
                         id: roomId,
-                        title: t.title,
+                        title: decodeHTMLEntry(t.title),
                         beginTime: false,
                         nick: t.uname,
                         online: t.online,
