@@ -1,6 +1,6 @@
 (function (){
     'use strict'
-    $.ajaxSetup({timeout: 5000});
+    $.ajaxSetup({timeout: 10000});
     let $p = function (jqobj) {
         return new Promise(function (resolve, reject) {
             jqobj.promise().then(resolve, reject);
@@ -391,6 +391,7 @@
         };
         return $p($.get('http://live.bilibili.com/feed/getList/1'))
             .then(result => {
+                result = result.substr(1, result.length - 3);
                 result = JSON.parse(result);
                 result = result.data.list;
                 return Promise.all(result.map(i => getRoomDetail(i.roomid, i.link)));
