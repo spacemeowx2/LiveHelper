@@ -36,6 +36,7 @@
         "http://*.twitch.tv/",
         "https://*.twitch.tv/*",
         "http://*.huomaotv.cn/*",
+        "http://*.huomao.com/*",
         "http://userapi.plu.cn/*",
         "http://*.quanmin.tv/*",
         "https://*.nicovideo.jp/*",
