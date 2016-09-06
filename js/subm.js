@@ -18,7 +18,7 @@
         converter = null; 
         return output; 
     }
-    function siteFactory(id, name, homepage, url, type, data, f) {
+    function siteFactory(id, name, homepage, url, type, data, f, isLogin) {
         return {
             getFollowList: function () {
                 //config.read(prefer full)
@@ -278,28 +278,28 @@
                 }));
             })
     };
-	
-	var huomao = siteFactory('huomao', '火猫', 'http://www.huomaotv.cn',
+  
+  var huomao = siteFactory('huomao', '火猫', 'http://www.huomaotv.cn',
         'http://www.huomaotv.cn/member/sub',
         'GET', {},
         result => {
-			return parseHTML(result, dom => new Promise(function (resolve, reject) {
-				let result = $(dom).find('div.userDy_cont').children();
-				result = result.toArray();
-				result = result.map(item => $(item));
-				result = result.filter(item => item.find('a.up_offline').length == 0);
-				result = result.map(item => ({
-					id: item.find('dl.VOD_title > dt > a').attr('href'),
-					title: item.find('dl.VOD_title > dt > a').text(),
-					beginTime: false,
-					nick: item.find('dl.VOD_title > dd > a').text(),
-					online: parseInt(item.find('dl.VOD_title > dd > span').text()),
-					img: item.find('img').attr('data-src'),
-					url: 'http://www.huomaotv.cn' + item.find('dl.VOD_title > dt > a').attr('href')
-				}));
-				resolve(result);
-			}));
-		}
+      return parseHTML(result, dom => new Promise(function (resolve, reject) {
+        let result = $(dom).find('div.userDy_cont').children();
+        result = result.toArray();
+        result = result.map(item => $(item));
+        result = result.filter(item => item.find('a.up_offline').length == 0);
+        result = result.map(item => ({
+          id: item.find('dl.VOD_title > dt > a').attr('href'),
+          title: item.find('dl.VOD_title > dt > a').text(),
+          beginTime: false,
+          nick: item.find('dl.VOD_title > dd > a').text(),
+          online: parseInt(item.find('dl.VOD_title > dd > span').text()),
+          img: item.find('img').attr('data-src'),
+          url: 'http://www.huomaotv.cn' + item.find('dl.VOD_title > dt > a').attr('href')
+        }));
+        resolve(result);
+      }));
+    }
     );
     
     var longzhu = siteFactory('longzhu', '龙珠', 'http://longzhu.com/',
@@ -401,11 +401,10 @@
     
     window.fetchers = [douyu, panda, zhanqi, huya, bili, quanmin, niconico, twitch, huomao, longzhu];
     window.enabledFetchers = () => {
-        let cacheConfig = config();
-        let list = fetchers.filter( (i) => cacheConfig['enabled.' + i.id] );
-        let moveToTop = (list, id) => {
-            let idx = false;
-            for (let i=0; i<list.length; i++) {
+        var list = fetchers.filter( (i) => config.enabled[i.id] );
+        function moveToTop (list, id) {
+            var idx = false;
+            for (var i=0; i<list.length; i++) {
                 if (list[i].id == id) {
                     idx = i;
                     break;
@@ -414,12 +413,12 @@
             if (idx != false) {
                 list.unshift(list.splice(idx, 1)[0]);
             }
-        };
+        }
         try {
-            let idList = JSON.parse(localStorage.idList);
-            for (let id of idList.reverse()) {
+            var idList = JSON.parse(localStorage.idList);
+            idList.reverse().forEach(function (id) {
                 moveToTop(list, id);
-            }
+            });
         } catch(e) {}
         return list;
     };

@@ -120,6 +120,7 @@
     } else  {
       tmpText = prefixExp(text, context);
     }
+
     if (r.test(tmpText)) {
       tmpText = tmpText.replace(r, function (t, textName) {
         return trans(textName, context);
