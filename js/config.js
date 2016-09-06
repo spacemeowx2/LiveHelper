@@ -73,7 +73,7 @@
       },
       loadFromStorage: function () {
         var i, item, value;
-        var savedConfig = JSON.parse(localStorage.config);
+        var savedConfig = JSON.parse(localStorage.config || '{}');
 
         for(i=0; i<options.length; i++) {
           item = options[i];
