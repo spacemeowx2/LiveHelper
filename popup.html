@@ -21,7 +21,7 @@
         <p style="text-align:center" v-trans="'=还没有启用的网站, 请到选项页启用'"></p>
     </div>
     <div class="site-template" v-show="sites.length != 0" v-for="site in sites" v-bind:data-id="site.id">
-        <div class="site-header">
+        <div class="site-header" v-on:click="open(site.homepage)">
             <p class="site-name" v-text="site.name"></p>
         </div>
         <li class="divider"></li>
@@ -37,7 +37,7 @@
                     <p style="text-align:center" v-trans="'=你关注的主播还没有开播'"></p>
                 </div>
                 <div v-else v-for="item in site.stream">
-                    <div class="stream-item" v-on:click='open(item.url)'>
+                    <div class="stream-item" v-on:click="open(item.url)">
                         <img v-bind:src="item.img" v-bind:class="{'hidden': !config.misc.preview}">
                         <div>
                             <p class="stream-item-title" v-text="item.title"></p>

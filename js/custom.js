@@ -18,8 +18,9 @@
       "开播_分钟单位": "{{=min}}mins",
       "开播_小时单位": "{{=hour}}hours",
       "观看人数": "{{? < # = online 10000 = online & / [ / = online 1000 1 k}}",
-      "使用无礼物显示的播放器(仅支持熊猫tv)": "Use no-gift player, only available on '熊猫' and '斗鱼' now",
+      "使用无礼物显示的播放器": "Use no-gift player, only available on '斗鱼' now",
       "还没有启用的网站, 请到选项页启用": "There is no enabled module, please enable modules in option page",
+      "启动时不提醒": "Don't notify me when this extension startup",
       "": ""
     },
     "zh_CN": {
@@ -63,6 +64,7 @@
       ui = ui[lang];
       return false;
     }
+    return true;
   });
 
   function prefixExp(exp, context) {
