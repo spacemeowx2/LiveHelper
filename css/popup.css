@@ -3,6 +3,8 @@ html, body, * {
 }
 body {
     width: 400px;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 .divider {
     height: 1px;

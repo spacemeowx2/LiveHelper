@@ -4,14 +4,17 @@
     "default_locale": "zh_CN",
     "name": "__MSG_extName__",
     "description": "__MSG_extDescription__",
-    "version": "1.0.3",
-    "options_page": "options.html",
+    "version": "1.0.6",
+    "options_ui": {
+        "page": "options.html"
+    },
 
     "icons": {
         "256":"icon/icon.png"
     },
     
     "browser_action": {
+        "browser_style": true,
         "default_icon": "icon/icon-64.png",
         "default_popup": "popup.html"
     },

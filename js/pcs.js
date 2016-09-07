@@ -1,9 +1,11 @@
 // content script for inject
-chrome.extension.sendRequest({act: 'loadcs'}, function (response) {
-    if (response.url) {
-        var s = document.createElement('script');
-        s.src = response.url;
-        s.charset = 'UTF-8';
-        document.body.appendChild(s);
-    }
+console.log('loading cs')
+chrome.runtime.sendMessage({act: 'loadcs'}, function (response) {
+  console.log('cs', response)
+  if (response.url) {
+    var s = document.createElement('script');
+    s.src = response.url;
+    s.charset = 'UTF-8';
+    document.body.appendChild(s);
+  }
 });

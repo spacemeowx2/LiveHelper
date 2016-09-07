@@ -5,13 +5,16 @@ var isLastOnline = function (id) {
   return lastStatus.hasOwnProperty(id) && lastStatus[id];
 }
 chrome.notifications.onClicked.addListener(function (id) {
+  console.log('click', id)
   for (var item of cachedItems) {
     if (item.id == id) {
+      console.log('open', item.url)
       window.open(item.url);
     }
   }
 });
 function goOnline(item) {
+  console.log('online', item)
   chrome.notifications.create(item.id, {
       type: 'basic',
       iconUrl: item.img,
@@ -24,15 +27,15 @@ function goOnline(item) {
 function goOffline(item) {
   chrome.notifications.clear(item.id);
 }
-let isFirst = true;
+var isFirst = true;
 function startMonitor() {
   if (!config.misc.notice) {
     setTimeout(startMonitor, 60 * 1000);
     return;
   }
   console.log((new Date)+' check');
-  let allPromise;
-  let errorList = [];
+  var allPromise;
+  var errorList = [];
   allPromise = enabledFetchers().map(function (v) {
     return v.getFollowList()
       .then(function (l) {
@@ -48,38 +51,38 @@ function startMonitor() {
   });
   Promise.all(allPromise)
   .then(function (lists) {
-    let items = [];
-    for (let list of lists) {
-      for (let item of list) {
+    var items = [];
+    for (var list of lists) {
+      for (var item of list) {
         items.push(item);
       }
     }
     return items;
   })
   .then(function (items) {
-    let lastStatusBackup = lastStatus;
-    let onlineItems = [];
+    var lastStatusBackup = lastStatus;
+    var onlineItems = [];
     cachedItems = items;
-    for (let item of items) {
+    for (var item of items) {
       if (!isLastOnline(item.id)) { //刚在线
         //goOnline(item);
         onlineItems.push(item);
       }
     }
-    for (let id of Object.keys(lastStatus)) {
+    for (var id of Object.keys(lastStatus)) {
       lastStatus[id]
     }
     lastStatus = {};
-    for (let item of items) {
+    for (var item of items) {
       lastStatus[item.id] = true;
     }
     
-    let lastKeys = Object.keys(lastStatusBackup);
-    for (let errId of errorList) {
-      let resumeKeys = lastKeys.filter(function (key) {
+    var lastKeys = Object.keys(lastStatusBackup);
+    for (var errId of errorList) {
+      var resumeKeys = lastKeys.filter(function (key) {
         return key.substr(0, errId.length) == errId
       });
-      for (let resumeKey of resumeKeys) {
+      for (var resumeKey of resumeKeys) {
         lastStatus[resumeKey] = lastStatusBackup[resumeKey];
       }
     }
@@ -93,7 +96,7 @@ function startMonitor() {
         return;
       }
     }
-    for (let item of onlineItems) {
+    for (var item of onlineItems) {
       goOnline(item);
     }
   })

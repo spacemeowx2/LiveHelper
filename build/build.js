@@ -25,20 +25,37 @@ manifest = manifest.replace(/("version"\s*:\s*)"(\d+\.\d+\.\d+)"/, function (_, 
 })
 fs.writeFileSync('manifest.json', manifest)
 
+manifest = JSON.parse(manifest)
+manifest.applications = {
+  gecko: {
+    id: 'spacemeowx2@gmail.com',
+    strict_min_version: '48.0'
+  }
+}
+fs.writeFileSync('manifest-fx.json', JSON.stringify(manifest, null, 2))
+
 // 压缩成zip
-console.log('ziping...')
-try {fs.mkdirSync('versions')} catch (e) {}
-var archive = archiver.create('zip', {})
-var output = fs.createWriteStream('versions/mlh-'+package.version+'.zip')
-var zipDirs = ['bootstrap-3.2.0', 'css', 'icon', 'img', 'js', '_locales']
-var zipFiles = ['background.html', 'manifest.json', 'options.html', 'popup.html']
+function zip(manifest, filename) {
+  console.log('ziping...', manifest)
+  try {fs.mkdirSync('versions')} catch (e) {}
+  var archive = archiver.create('zip', {})
+  var output = fs.createWriteStream(filename)
+  var zipDirs = ['bootstrap-3.2.0', 'css', 'icon', 'img', 'js', '_locales']
+  var zipFiles = ['background.html', 'options.html', 'popup.html']
 
-archive.pipe(output)
+  archive.pipe(output)
 
-zipDirs.forEach(function (dir) {
-  archive.directory(dir, dir)
-})
-zipFiles.forEach(function (file) {
-  archive.file(file)
-})
-archive.finalize()
+  zipDirs.forEach(function (dir) {
+    archive.directory(dir, dir)
+  })
+  zipFiles.forEach(function (file) {
+    archive.file(file)
+  })
+  archive.file(manifest, {
+    name: 'manifest.json'
+  })
+  archive.finalize()
+}
+
+zip('manifest.json', 'versions/mlh-'+package.version+'.zip')
+zip('manifest-fx.json', 'versions/mlh-'+package.version+'.xpi')

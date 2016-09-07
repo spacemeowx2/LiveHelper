@@ -178,13 +178,15 @@
     let parseHTML = (html, promiseFactory) => {
         let $iframe = $('<iframe></iframe>');
         let dom = $.parseHTML(html, $iframe.document);
-        return promiseFactory(dom).then( (list) => {
-            $iframe.remove();
-            return list;
-        }, (e) => {
-            console.log('parseHTML err:'+e);
-            $iframe.remove();
-        });
+        return Promise.resolve()
+            .then(() => promiseFactory(dom))
+            .then( (list) => {
+                $iframe.remove();
+                return list;
+            }, (e) => {
+                console.log('parseHTML err:'+e);
+                $iframe.remove();
+            });
     };
     
     var niconico = siteFactory('niconico', 'ニコニコ', 'http://live.nicovideo.jp',
@@ -320,7 +322,7 @@
         let getInfoFromItem = function (item) {
             item = $(item);
             if (item.find('i.icon_live').length == 0)
-                return false;
+                return null;
             let beginTime = item.find('span.glyphicon01_playtime').text().trim();
             let timeRE = /(\d+)分钟/;
             if (!timeRE.test(beginTime)) {
@@ -341,17 +343,17 @@
                 url: 'http://www.douyu.com/' + roomid
             };
         };
-        return $p($.get('http://www.douyu.com/room/follow'))
-            .then(text => parseHTML(text, dom => new Promise(function (resolve, reject) {
+        return $p($.get('https://www.douyu.com/room/follow'))
+            .then(text => parseHTML(text, dom => {
                 let followedList = $(dom).find('.attention > ul');
                 if (followedList.length == 0) {
-                    reject('douyu not login');
+                    throw new Error('douyu not login');
                     return;
                 }
                 let itemArray = $.makeArray(followedList.children());
                 itemArray = itemArray.map(getInfoFromItem);
-                resolve(itemArray.filter(i => i));
-            })));
+                return itemArray.filter(i => i);
+            }));
     };
     bili.getFullFollowList = () => {
         let BLAPISign = (paramObj) => {

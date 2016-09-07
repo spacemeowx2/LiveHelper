@@ -33,11 +33,12 @@ $.get('https://imspace.applinzi.com/player/table.php').then(json => {
     },
     ["blocking"]
   );
-  chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+  chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+      console.log('recv message', request, sender)
       if (request.act == 'loadcs') { if (config.misc.inject) {
           //sender.tab.url
           for (let item of cs) {
-              if (item.re.test(sender.tab.url)) {
+              if (item.re.test(sender.url)) {
                   sendResponse({url: item.url});
                   break;
               }

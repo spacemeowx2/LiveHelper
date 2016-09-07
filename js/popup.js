@@ -64,7 +64,7 @@ new Vue({
             toBottom(site);
           }
           list = list.sort( function (a, b) {
-            b.online - a.online;
+            return b.online - a.online;
           });
           site.stream = list;
           site.ready = true;
