@@ -145,7 +145,9 @@ function bindDrag() {
           movingNode.fadeTo('fast', 1);
           floatingNode.fadeTo('fast', 0, function (){$(this).remove()});
           
-          var idList = $.map($('#list').children(), node => $(node).attr('data-id') );
+          var idList = $.map($('#list').children(), function (node) {
+            return $(node).attr('data-id');
+          });
           console.log(idList);
           localStorage.idList = JSON.stringify(idList);
       

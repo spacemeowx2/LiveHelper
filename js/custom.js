@@ -51,7 +51,10 @@
       "": ""
     }
   };
-  var lang = chrome.i18n.getUILanguage().replace('-', '_');
+  var lang = "";
+  if (chrome.i18n.getUILanguage) {
+    lang = chrome.i18n.getUILanguage().replace('-', '_');
+  }
   var tryQue = [];
   tryQue.push(lang);
   if (lang.indexOf('_') != -1) {
