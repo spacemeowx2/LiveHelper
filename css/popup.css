@@ -1,8 +1,13 @@
+#list {
+    width: 400px;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
 html, body, * {
     font-family: "Microsoft YaHei",Arial,Helvetica,sans-serif,"宋体";
 }
 body {
-    width: 400px;
     overflow-x: hidden;
     overflow-y: auto;
 }

@@ -171,7 +171,9 @@
     var parseHTML = function parseHTML(html, promiseFactory) {
         var $iframe = $('<iframe></iframe>');
         var dom = $.parseHTML(html, $iframe.document);
-        return promiseFactory(dom).then(function (list) {
+        return Promise.resolve().then(function () {
+            return promiseFactory(dom);
+        }).then(function (list) {
             $iframe.remove();
             return list;
         }, function (e) {
@@ -308,14 +310,9 @@
     });
 
     douyu.getFullFollowList = function () {
-        var parseOnline = function parseOnline(text) {
-            return parseInt(text.replace(/(\d+(\.\d+)?)万/, function (_, t) {
-                return parseFloat(t) * 10000;
-            }));
-        };
         var getInfoFromItem = function getInfoFromItem(item) {
             item = $(item);
-            if (item.find('i.icon_live').length == 0) return false;
+            if (item.find('i.icon_live').length == 0) return null;
             var beginTime = item.find('span.glyphicon01_playtime').text().trim();
             var timeRE = /(\d+)分钟/;
             if (!timeRE.test(beginTime)) {
@@ -331,24 +328,22 @@
                 title: item.find('h1').text().trim(),
                 beginTime: beginTime,
                 nick: item.find('span.username').text().trim(),
-                online: parseOnline(item.find('span.glyphicon01_hot').text().trim()),
+                online: parseInt(item.find('span.glyphicon01_hot').text().trim()),
                 img: item.find('img').data('original'),
                 url: 'http://www.douyu.com/' + roomid
             };
         };
-        return $p($.get('http://www.douyu.com/room/follow')).then(function (text) {
+        return $p($.get('https://www.douyu.com/room/follow')).then(function (text) {
             return parseHTML(text, function (dom) {
-                return new Promise(function (resolve, reject) {
-                    var followedList = $(dom).find('.attention > ul');
-                    if (followedList.length == 0) {
-                        reject('douyu not login');
-                        return;
-                    }
-                    var itemArray = $.makeArray(followedList.children());
-                    itemArray = itemArray.map(getInfoFromItem);
-                    resolve(itemArray.filter(function (i) {
-                        return i;
-                    }));
+                var followedList = $(dom).find('.attention > ul');
+                if (followedList.length == 0) {
+                    throw new Error('douyu not login');
+                    return;
+                }
+                var itemArray = $.makeArray(followedList.children());
+                itemArray = itemArray.map(getInfoFromItem);
+                return itemArray.filter(function (i) {
+                    return i;
                 });
             });
         });

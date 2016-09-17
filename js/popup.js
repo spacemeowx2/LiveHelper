@@ -32,10 +32,11 @@ new Vue({
     }
   },
   ready: function () {
+    var scrollWidth = 20; // idk wtf chrome is doing
     if (!config.misc.preview) {
-      $(document.body).width(400-120);
+      $('#list').width(400-120+scrollWidth);
     } else {
-      $(document.body).width(400);
+      $('#list').width(400+scrollWidth);
     }
     var self = this;
     setInterval(function () {
