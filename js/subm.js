@@ -12,11 +12,16 @@
         });
     }
     let decodeHTMLEntry = function(s) {
-        var converter = document.createElement("DIV"); 
-        converter.innerHTML = s; 
-        var output = converter.innerText; 
-        converter = null; 
-        return output; 
+        // var converter = document.createElement("DIV"); 
+        // converter.innerHTML = s; 
+        // var output = converter.innerText; 
+        // converter = null; 
+        // return output; 
+        let r = ''
+        try {
+         r = $.parseHTML(s)[0].textContent
+        } catch (e) {}
+        return r
     }
     function siteFactory(id, name, homepage, url, type, data, f, isLogin) {
         return {

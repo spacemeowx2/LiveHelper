@@ -1,6 +1,6 @@
 {
   "name": "livehelper",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "帮你整合多个直播网站的关注列表",
   "main": "build/index.js",
   "scripts": {

@@ -4,7 +4,7 @@
     "default_locale": "zh_CN",
     "name": "__MSG_extName__",
     "description": "__MSG_extDescription__",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "options_ui": {
         "page": "options.html"
     },
