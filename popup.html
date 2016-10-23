@@ -24,7 +24,6 @@
         <div class="site-header" v-on:click="open(site.homepage)">
             <p class="site-name" v-text="site.name"></p>
         </div>
-        <li class="divider"></li>
         <div class="site-items">
             <div v-if="!site.ready">
                 <p style="text-align:center">
@@ -36,22 +35,21 @@
                 <div v-if="site.stream.length == 0">
                     <p style="text-align:center" v-trans="'=你关注的主播还没有开播'"></p>
                 </div>
-                <div v-else v-for="item in site.stream">
-                    <div class="stream-item" v-on:click="open(item.url)">
-                        <img v-bind:src="item.img" v-bind:class="{'hidden': !config.misc.preview}">
-                        <div>
+                <div v-else>
+                    <div class="stream-item" :class2="{'stream-hover': config.misc.preview}" v-on:click="open(item.url)" v-for="item in site.stream">
+                        <!--img v-bind:src="item.img" v-bind:class="{'hidden': !config.misc.preview}"-->
+                        <div class="stream-item-preview" :style="imgStyle(item)" :class="{hidden: !config.misc.preview}"></div>
+                        <div class="stream-item-detail">
                             <p class="stream-item-title" v-text="item.title"></p>
                             <span class="stream-item-time" v-text="getShowTime(item)"></span>
                             <span class="stream-item-nick" v-text="item.nick"></span>
                             <span class="stream-item-online" v-text="'=观看人数' | trans {online:item.online}"></span>
                         </div>
+                        <div class="clearfix"></div>
                     </div>
-                    <div class="clearfix"></div>
-                    <li class="divider"></li>
                 </div>
             </div>
         </div>
-        <li class="divider"></li>
     </div>
 </div>
 <script src="js/popup.js" charset="UTF-8"></script>

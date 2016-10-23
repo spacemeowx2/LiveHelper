@@ -221,19 +221,22 @@
         });
     });
 
-    var twitch = siteFactory('twitch', 'twitch', 'http://www.twitch.tv', 'http://api.twitch.tv/api/viewer/info.json', 'GET', { on_site: 1 }, function (result) {});
+    var twitch = siteFactory('twitch', 'twitch', 'https://www.twitch.tv', 'https://api.twitch.tv/api/viewer/info.json', 'GET', { on_site: 1 }, function (result) {});
     twitch.getDefaultFollowList = function () {
+        var clientID = 'jzkbprff40iqj646a697cyrvl0zt2m6';
         var getOAuthToken = function getOAuthToken() {
-            return getCookie({ url: 'http://www.twitch.tv', name: 'api_token' }).then(function (apiToken) {
+            return getCookie({ url: 'https://www.twitch.tv', name: 'api_token' }).then(function (apiToken) {
                 if (apiToken.length == 0) {
                     throw 'twitch api token not found';
                 }
                 apiToken = apiToken[0].value;
-                //console.log('api token '+apiToken);
+                // console.log('api token '+apiToken);
                 var settings = {
                     type: 'GET',
-                    url: 'http://api.twitch.tv/api/me',
+                    url: 'https://api.twitch.tv/api/me',
                     headers: {
+                        'X-CSRF-Token': 'null', //TODO
+                        'Client-ID': clientID,
                         'Twitch-Api-Token': apiToken
                     }
                 };
@@ -255,6 +258,7 @@
                 type: 'GET',
                 url: 'https://streams.twitch.tv/kraken/streams/followed?limit=24&offset=0&stream_type=live',
                 headers: {
+                    'Client-ID': clientID,
                     'Authorization': 'OAuth ' + oauthToken
                 }
             }));
@@ -309,6 +313,23 @@
                 online: false,
                 img: 'http://img.plures.net/live/screenshots/' + i.room.roomId + '/0.jpg',
                 url: 'http://star.longzhu.com' + i.feed.url
+            };
+        });
+        return result;
+    });
+
+    var necc = siteFactory('necc', '网易CC', 'http://cc.163.com/', 'http://cc.163.com/user/follow/?format=json&page=1&size=20', 'GET', { format: 'json', page: '1', size: '20' }, function (result) {
+        result = result.lives;
+        result = result.map(function (i) {
+            return {
+                id: i.ccid,
+                title: i.title,
+                beginTime: new Date(i.startat * 1000).getTime(),
+                nick: i.nickname,
+                online: i.visitor,
+                img: i.cover,
+                url: 'http://cc.163.com/' + i.ccid,
+                forceRatio: true
             };
         });
         return result;
@@ -397,7 +418,7 @@
     };
     //bili.getFullFollowList = false;
 
-    window.fetchers = [douyu, panda, zhanqi, huya, bili, quanmin, niconico, twitch, huomao, longzhu];
+    window.fetchers = [douyu, panda, zhanqi, huya, bili, quanmin, niconico, twitch, huomao, longzhu, necc];
     window.enabledFetchers = function () {
         var list = fetchers.filter(function (i) {
             return config.enabled[i.id];

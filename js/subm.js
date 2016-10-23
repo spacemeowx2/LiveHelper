@@ -228,23 +228,26 @@
         }
     );
     
-    var twitch = siteFactory('twitch', 'twitch', 'http://www.twitch.tv',
-        'http://api.twitch.tv/api/viewer/info.json',
+    var twitch = siteFactory('twitch', 'twitch', 'https://www.twitch.tv',
+        'https://api.twitch.tv/api/viewer/info.json',
         'GET', {on_site: 1},
         result => {}
     );
     twitch.getDefaultFollowList = function () {
-        let getOAuthToken = () => getCookie({url: 'http://www.twitch.tv', name: 'api_token'})
+        const clientID = 'jzkbprff40iqj646a697cyrvl0zt2m6'
+        let getOAuthToken = () => getCookie({url: 'https://www.twitch.tv', name: 'api_token'})
             .then(apiToken => {
                 if (apiToken.length == 0) {
                     throw 'twitch api token not found';
                 }
                 apiToken = apiToken[0].value;
-                //console.log('api token '+apiToken);
+                // console.log('api token '+apiToken);
                 let settings = {
                     type: 'GET',
-                    url: 'http://api.twitch.tv/api/me',
+                    url: 'https://api.twitch.tv/api/me',
                     headers: {
+                        'X-CSRF-Token': 'null', //TODO
+                        'Client-ID': clientID,
                         'Twitch-Api-Token': apiToken
                     }
                 };
@@ -265,6 +268,7 @@
                 type: 'GET',
                 url: 'https://streams.twitch.tv/kraken/streams/followed?limit=24&offset=0&stream_type=live',
                 headers: {
+                    'Client-ID': clientID,
                     'Authorization': 'OAuth '+oauthToken
                 }
             }
@@ -321,6 +325,24 @@
                 url: 'http://star.longzhu.com'+i.feed.url
             }));
             return result;
+        });
+
+    var necc = siteFactory('necc', '网易CC', 'http://cc.163.com/',
+        'http://cc.163.com/user/follow/?format=json&page=1&size=20',
+        'GET', {format:'json', page: '1', size: '20'},
+        result => {
+            result = result.lives
+            result = result.map(i => ({
+                id: i.ccid,
+                title: i.title,
+                beginTime: new Date(i.startat * 1000).getTime(),
+                nick: i.nickname,
+                online: i.visitor,
+                img: i.cover,
+                url: `http://cc.163.com/${i.ccid}`,
+                forceRatio: true
+            }))
+            return result
         });
     
     douyu.getFullFollowList = () => {
@@ -402,7 +424,7 @@
     };
     //bili.getFullFollowList = false;
     
-    window.fetchers = [douyu, panda, zhanqi, huya, bili, quanmin, niconico, twitch, huomao, longzhu];
+    window.fetchers = [douyu, panda, zhanqi, huya, bili, quanmin, niconico, twitch, huomao, longzhu, necc];
     window.enabledFetchers = () => {
         var list = fetchers.filter( (i) => config.enabled[i.id] );
         function moveToTop (list, id) {

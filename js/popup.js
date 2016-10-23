@@ -29,6 +29,15 @@ new Vue({
         return custom.trans('=开播_分钟单位', context);
       t /= 60;
       return custom.trans('=开播_小时单位', context);
+    },
+    imgStyle: function (item) {
+      var style = {
+        backgroundImage: 'url('+item.img+')'
+      }
+      if (item.forceRatio) {
+        style.backgroundSize = '120px 67px'
+      }
+      return style
     }
   },
   ready: function () {

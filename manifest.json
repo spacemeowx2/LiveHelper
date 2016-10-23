@@ -4,7 +4,7 @@
     "default_locale": "zh_CN",
     "name": "__MSG_extName__",
     "description": "__MSG_extDescription__",
-    "version": "1.0.8",
+    "version": "1.0.10",
     "options_ui": {
         "page": "options.html"
     },
@@ -43,6 +43,7 @@
         "http://userapi.plu.cn/*",
         "http://*.quanmin.tv/*",
         "https://*.nicovideo.jp/*",
+        "http://*.163.com/*",
         
         "https://imspace.applinzi.com/*",
         
