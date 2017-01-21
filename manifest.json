@@ -4,7 +4,7 @@
     "default_locale": "zh_CN",
     "name": "__MSG_extName__",
     "description": "__MSG_extDescription__",
-    "version": "1.0.11",
+    "version": "1.0.12",
     "options_ui": {
         "page": "options.html"
     },
@@ -40,7 +40,6 @@
         "*://*.huomao.com/*",
         "*://userapi.plu.cn/*",
         "*://*.quanmin.tv/*",
-        "*://*.nicovideo.jp/*",
         "*://*.163.com/*",
         
         "https://imspace.applinzi.com/*",
@@ -50,7 +49,6 @@
         "*://*.hdslb.com/*",
         "*://*.plures.net/*",
         "*://*.dwstatic.com/*",
-        "*://*.jtvnw.net/*",
         "*://*.jtvnw.net/*",
         "*://*.nimg.jp/*"
     ],
