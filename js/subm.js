@@ -266,7 +266,7 @@
         let getFollowedStreamJSON = oauthToken => $p($.ajax(
             {
                 type: 'GET',
-                url: 'https://streams.twitch.tv/kraken/streams/followed?limit=24&offset=0&stream_type=live',
+                url: 'https://api.twitch.tv/kraken/streams/followed?limit=24&offset=0&stream_type=live',
                 headers: {
                     'Client-ID': clientID,
                     'Authorization': 'OAuth '+oauthToken
