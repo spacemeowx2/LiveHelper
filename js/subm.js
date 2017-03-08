@@ -50,6 +50,7 @@
                         return result;
                     } catch (e) {
                         console.log('In default get follow list'+e)
+                        console.error(e.stack)
                         throw(e);
                     }
                 });
@@ -164,7 +165,7 @@
         'http://www.quanmin.tv/api/v1',
         'POST', {m:'user.getfollowlist', p:{page: 0, size: 50}},
         result => {
-            result = JSON.parse(result);
+            // result = JSON.parse(result);
             result = result.data.items;
             result = result.filter(i => i.is_playing);
             result = result.map( i => ({

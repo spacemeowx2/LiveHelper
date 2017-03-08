@@ -35,7 +35,6 @@
     "*://*.huomao.com/*",
     "*://userapi.plu.cn/*",
     "*://*.quanmin.tv/*",
-    "*://*.nicovideo.jp/*",
     "*://*.163.com/*",
     "https://imspace.applinzi.com/*",
     "*://*.douyucdn.cn/*",
@@ -43,7 +42,6 @@
     "*://*.hdslb.com/*",
     "*://*.plures.net/*",
     "*://*.dwstatic.com/*",
-    "*://*.jtvnw.net/*",
     "*://*.jtvnw.net/*",
     "*://*.nimg.jp/*"
   ],

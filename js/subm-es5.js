@@ -52,6 +52,7 @@
                         return result;
                     } catch (e) {
                         console.log('In default get follow list' + e);
+                        console.error(e.stack);
                         throw e;
                     }
                 });
@@ -154,7 +155,7 @@
     });
 
     var quanmin = siteFactory('quanmin', '全民', 'http://www.quanmin.tv', 'http://www.quanmin.tv/api/v1', 'POST', { m: 'user.getfollowlist', p: { page: 0, size: 50 } }, function (result) {
-        result = JSON.parse(result);
+        // result = JSON.parse(result);
         result = result.data.items;
         result = result.filter(function (i) {
             return i.is_playing;
