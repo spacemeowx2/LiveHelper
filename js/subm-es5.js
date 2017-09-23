@@ -59,7 +59,7 @@
             }
         };
     }
-    var douyu = siteFactory('douyu', '斗鱼', 'http://www.douyu.com', 'http://www.douyu.com/member/cp/get_follow_list', 'POST', {}, function (result) {
+    var douyu = siteFactory('douyu', '斗鱼', 'https://www.douyu.com', 'https://www.douyu.com/member/cp/get_follow_list', 'POST', {}, function (result) {
         result = JSON.parse(result);
         result = result.room_list;
         result = result.map(function (i) {
@@ -70,13 +70,12 @@
                 nick: i.nickname,
                 online: i.online,
                 img: i.room_src,
-                url: 'http://www.douyu.com' + i.url
+                url: 'https://www.douyu.com' + i.url
             };
         });
         return result;
     });
-    var panda = siteFactory('panda', '熊猫', 'http://www.panda.tv', 'http://www.panda.tv/ajax_get_follow_rooms', 'GET', { stamp: Math.random() }, function (result) {
-        result = JSON.parse(result);
+    var panda = siteFactory('panda', '熊猫', 'https://www.panda.tv', 'https://www.panda.tv/ajax_get_follow_rooms', 'GET', { stamp: Math.random() }, function (result) {
         result = result.data.items.filter(function (i) {
             return i.status == 2;
         });
@@ -88,12 +87,12 @@
                 nick: i.userinfo.nickName,
                 online: i.person_num,
                 img: i.pictures.img,
-                url: 'http://www.panda.tv/room/' + i.id
+                url: 'https://www.panda.tv/room/' + i.id
             };
         });
         return result;
     });
-    var zhanqi = siteFactory('zhanqi', '战旗', 'http://www.zhanqi.tv', 'http://www.zhanqi.tv/api/user/follow.listall', 'POST', { stamp: Math.random() }, function (result) {
+    var zhanqi = siteFactory('zhanqi', '战旗', 'https://www.zhanqi.tv', 'https://www.zhanqi.tv/api/user/follow.listall', 'POST', { stamp: Math.random() }, function (result) {
         result = result.data;
         result = result.filter(function (i) {
             return i.status == 4;
@@ -102,16 +101,16 @@
             return {
                 id: i.roomId,
                 title: i.title,
-                beginTime: false, //http://www.zhanqi.tv/api/static/live.roomid/42082.json 
+                beginTime: false, //https://www.zhanqi.tv/api/static/live.roomid/42082.json 
                 nick: i.nickname,
                 online: i.online,
                 img: i.bpic,
-                url: 'http://www.zhanqi.tv' + i.roomUrl
+                url: 'https://www.zhanqi.tv' + i.roomUrl
             };
         });
         return result;
     });
-    var huya = siteFactory('huya', '虎牙', 'http://www.huya.com', 'http://i.huya.com/?do=ajaxLm', 'GET', { stamp: Math.random() }, function (result) {
+    var huya = siteFactory('huya', '虎牙', 'https://www.huya.com', 'https://i.huya.com/?do=ajaxLm', 'GET', { stamp: Math.random() }, function (result) {
         result = JSON.parse(result);
         result = result.s;
         result = result.filter(function (i) {
@@ -125,16 +124,16 @@
                 nick: i.nick,
                 online: i.total_count,
                 img: i.screenshort,
-                url: 'http://www.huya.com/' + i.yyid //i.privateHost
+                url: 'https://www.huya.com/' + i.yyid //i.privateHost
             };
         });
         return result;
     });
-    var bili = siteFactory('bilibili', '哔哩哔哩', 'http://live.bilibili.com', 'http://live.bilibili.com/feed/getList/1', 'POST', {}, function (result) {
+    var bili = siteFactory('bilibili', '哔哩哔哩', 'https://live.bilibili.com', 'https://live.bilibili.com/feed/getList/1', 'POST', {}, function (result) {
         result = JSON.parse(result);
         result = result.data.list;
         var getRoomDetail = function getRoomDetail(roomId, url) {
-            return $p($.get('http://live.bilibili.com/live/getInfo?roomid=' + roomId)).then(function (t) {
+            return $p($.get('https://live.bilibili.com/live/getInfo?roomid=' + roomId)).then(function (t) {
                 t = JSON.parse(t);
                 t = t.data;
                 return {
@@ -154,7 +153,7 @@
         }));
     });
 
-    var quanmin = siteFactory('quanmin', '全民', 'http://www.quanmin.tv', 'http://www.quanmin.tv/api/v1', 'POST', { m: 'user.getfollowlist', p: { page: 0, size: 50 } }, function (result) {
+    var quanmin = siteFactory('quanmin', '全民', 'https://www.quanmin.tv', 'https://www.quanmin.tv/api/v1', 'POST', { m: 'user.getfollowlist', p: { page: 0, size: 50 } }, function (result) {
         // result = JSON.parse(result);
         result = result.data.items;
         result = result.filter(function (i) {
@@ -168,7 +167,7 @@
                 nick: i.nick,
                 online: i.view,
                 img: i.thumb,
-                url: 'http://www.quanmin.tv/v/' + i.uid
+                url: 'https://www.quanmin.tv/v/' + i.uid
             };
         });
         return result;
@@ -281,7 +280,7 @@
         });
     };
 
-    var huomao = siteFactory('huomao', '火猫', 'http://www.huomaotv.cn', 'http://www.huomao.com/subscribe/getUsersSubscribe', 'GET', {}, function (result) {
+    var huomao = siteFactory('huomao', '火猫', 'https://www.huomaotv.cn', 'https://www.huomao.com/subscribe/getUsersSubscribe', 'GET', {}, function (result) {
         result = result.data.usersSubChannels;
         result = result.filter(function (i) {
             return i.is_live == '1';
@@ -294,7 +293,7 @@
                 nick: i.username,
                 online: i.views,
                 img: i.image,
-                url: 'http://www.huomao.com/' + i.room_number
+                url: 'https://www.huomao.com/' + i.room_number
             };
         });
         return result;
@@ -357,7 +356,7 @@
                 nick: item.find('span.username').text().trim(),
                 online: parseInt(item.find('span.glyphicon01_hot').text().trim()),
                 img: item.find('img').data('original'),
-                url: 'http://www.douyu.com/' + roomid
+                url: 'https://www.douyu.com/' + roomid
             };
         };
         return $p($.get('https://www.douyu.com/room/follow')).then(function (text) {
@@ -395,7 +394,7 @@
             paramObj['sign'] = BLAPISign(paramObj);
             //console.log(paramObj);
 
-            return $p($.get('http://live.bilibili.com/api/room_info', paramObj)).then(function (t) {
+            return $p($.get('https://live.bilibili.com/api/room_info', paramObj)).then(function (t) {
                 t = t.data;
                 return {
                     id: roomId,
@@ -408,7 +407,7 @@
                 };
             });
         };
-        return $p($.get('http://live.bilibili.com/feed/getList/1')).then(function (result) {
+        return $p($.get('https://live.bilibili.com/feed/getList/1')).then(function (result) {
             result = result.substr(1, result.length - 3);
             result = JSON.parse(result);
             result = result.data.list;

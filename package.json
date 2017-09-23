@@ -1,10 +1,10 @@
 {
   "name": "livehelper",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "帮你整合多个直播网站的关注列表",
   "main": "build/index.js",
   "scripts": {
-    "start": "node build/build.js",
+    "build": "node build/build.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
