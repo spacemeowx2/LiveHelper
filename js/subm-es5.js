@@ -110,24 +110,28 @@
         });
         return result;
     });
-    var huya = siteFactory('huya', '虎牙', 'https://www.huya.com', 'https://i.huya.com/?do=ajaxLm', 'GET', { stamp: Math.random() }, function (result) {
+    var huya = siteFactory('huya', '虎牙', 'https://www.huya.com', 'https://www.huya.com/udb_web/checkLogin.php', 'GET', { stamp: Math.random() }, function (result) {
         result = JSON.parse(result);
-        result = result.s;
-        result = result.filter(function (i) {
-            return i.isLive;
+        var uid = result.uid;
+        return $.get('https://fw.huya.com/dispatch?do=subscribeList&uid=' + uid + '&page=1&pageSize=20&_=' + new Date().getTime()).then(function (result) {
+            result = JSON.parse(result);
+            result = result.result.list;
+            result = result.filter(function (i) {
+                return i.isLive;
+            });
+            result = result.map(function (i) {
+                return {
+                    id: i.yyid, //i.privateHost,
+                    title: $('<span>' + i.intro + '</span>').text(),
+                    beginTime: new Date().getTime() - i.startTime * 1000 * 60,
+                    nick: i.nick,
+                    online: i.totalCount,
+                    img: i.screenshot,
+                    url: 'https://www.huya.com/' + i.yyid //i.privateHost
+                };
+            });
+            return result;
         });
-        result = result.map(function (i) {
-            return {
-                id: i.yyid, //i.privateHost,
-                title: $('<span>' + i.intro + '</span>').text(),
-                beginTime: new Date().getTime() - i.startTime * 1000 * 60,
-                nick: i.nick,
-                online: i.total_count,
-                img: i.screenshort,
-                url: 'https://www.huya.com/' + i.yyid //i.privateHost
-            };
-        });
-        return result;
     });
     var bili = siteFactory('bilibili', '哔哩哔哩', 'https://live.bilibili.com', 'https://live.bilibili.com/feed/getList/1', 'POST', {}, function (result) {
         result = JSON.parse(result);

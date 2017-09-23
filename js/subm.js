@@ -114,23 +114,27 @@
         }
     );
     var huya = siteFactory('huya', '虎牙', 'https://www.huya.com',
-        'https://i.huya.com/?do=ajaxLm',
+        'https://www.huya.com/udb_web/checkLogin.php',
         'GET', {stamp: Math.random()},
         result => {
             result = JSON.parse(result);
-            result = result.s;
-            result = result.filter( i => i.isLive);
-            result = result.map( (i) => ({
-                    id: i.yyid,//i.privateHost,
-                    title: $('<span>'+i.intro+'</span>').text(),
-                    beginTime: (new Date).getTime() - i.startTime * 1000 * 60,
-                    nick: i.nick,
-                    online: i.total_count,
-                    img: i.screenshort,
-                    url: 'https://www.huya.com/' + i.yyid//i.privateHost
-                })
-            );
-            return result;
+            const uid = result.uid;
+            return $.get(`https://fw.huya.com/dispatch?do=subscribeList&uid=${uid}&page=1&pageSize=20&_=${(new Date).getTime()}`).then(result => {
+                result = JSON.parse(result)
+                result = result.result.list;
+                result = result.filter( i => i.isLive);
+                result = result.map( (i) => ({
+                        id: i.yyid,//i.privateHost,
+                        title: $('<span>'+i.intro+'</span>').text(),
+                        beginTime: (new Date).getTime() - i.startTime * 1000 * 60,
+                        nick: i.nick,
+                        online: i.totalCount,
+                        img: i.screenshot,
+                        url: 'https://www.huya.com/' + i.yyid//i.privateHost
+                    })
+                );
+                return result;
+            })
         }
     );
     var bili = siteFactory('bilibili', '哔哩哔哩', 'https://live.bilibili.com',
