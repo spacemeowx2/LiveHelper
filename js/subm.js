@@ -84,7 +84,7 @@
             result = result.map( (i) => ({
                     id: i.id,
                     title: i.name,
-                    beginTime: false, //i.start_time*1000  不可靠
+                    beginTime: i.start_time*1000, //i.start_time*1000  不可靠
                     nick: i.userinfo.nickName,
                     online: i.person_num,
                     img: i.pictures.img,
