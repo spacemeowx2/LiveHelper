@@ -338,6 +338,40 @@
         });
         return result;
     });
+    var egameqq = siteFactory('egameqq', '企鹅电竞', 'https://egame.qq.com/', 'https://egame.qq.com/followlist', 'GET', {}, function (html) {
+        var getOnline = function getOnline(text) {
+            var ret = /([0-9\.]+?)(万)?人气/.exec(text);
+            if (ret) {
+                var online = parseFloat(ret[1]);
+                if (ret[2] === '万') {
+                    online *= 10000;
+                }
+                return online;
+            }
+            return 0;
+        };
+        return parseHTML(html, function (dom) {
+            return new Promise(function (resolve, reject) {
+                var itemArray = $.makeArray($(dom).find('#online-container .gui-list-unit'));
+                itemArray = itemArray.map(function (item) {
+                    item = $(item);
+                    var id = item.attr('data-anchor');
+                    return {
+                        id: id,
+                        title: item.find('.glc-info > h4').text(),
+                        beginTime: false,
+                        nick: item.find('.glc-info > p > span:last').text(),
+                        online: getOnline(item.find('.glc-number').text()),
+                        img: item.find('.glc-img > img').attr('src'),
+                        url: 'https://egame.qq.com/live?anchorid=' + id
+                    };
+                });
+                resolve(itemArray.filter(function (i) {
+                    return i;
+                }));
+            });
+        });
+    });
 
     douyu.getFullFollowList = function () {
         var getInfoFromItem = function getInfoFromItem(item) {
@@ -422,7 +456,7 @@
     };
     //bili.getFullFollowList = false;
 
-    window.fetchers = [douyu, panda, zhanqi, huya, bili, quanmin, niconico, twitch, huomao, longzhu, necc];
+    window.fetchers = [douyu, panda, zhanqi, huya, bili, quanmin, niconico, twitch, huomao, longzhu, necc, egameqq];
     window.enabledFetchers = function () {
         var list = fetchers.filter(function (i) {
             return config.enabled[i.id];

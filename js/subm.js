@@ -348,6 +348,39 @@
             }))
             return result
         });
+    var egameqq = siteFactory('egameqq', '企鹅电竞', 'https://egame.qq.com/',
+        'https://egame.qq.com/followlist',
+        'GET', {},
+        html => {
+            const getOnline = (text) => {
+                let ret = /([0-9\.]+?)(万)?人气/.exec(text)
+                if (ret) {
+                    let online = parseFloat(ret[1])
+                    if (ret[2] === '万') {
+                        online *= 10000
+                    }
+                    return online
+                }
+                return 0
+            }
+            return parseHTML(html, (dom) => new Promise(function (resolve, reject) {
+                let itemArray = $.makeArray($(dom).find('#online-container .gui-list-unit'));
+                itemArray = itemArray.map(item => {
+                    item = $(item)
+                    let id = item.attr('data-anchor')
+                    return {
+                        id: id,
+                        title: item.find('.glc-info > h4').text(),
+                        beginTime: false,
+                        nick: item.find('.glc-info > p > span:last').text(),
+                        online: getOnline(item.find('.glc-number').text()),
+                        img: item.find('.glc-img > img').attr('src'),
+                        url: 'https://egame.qq.com/live?anchorid=' + id
+                    }
+                });
+                resolve(itemArray.filter(i => i));
+            }))
+        })
     
     douyu.getFullFollowList = () => {
         let getInfoFromItem = function (item) {
@@ -428,7 +461,7 @@
     };
     //bili.getFullFollowList = false;
     
-    window.fetchers = [douyu, panda, zhanqi, huya, bili, quanmin, niconico, twitch, huomao, longzhu, necc];
+    window.fetchers = [douyu, panda, zhanqi, huya, bili, quanmin, niconico, twitch, huomao, longzhu, necc, egameqq];
     window.enabledFetchers = () => {
         var list = fetchers.filter( (i) => config.enabled[i.id] );
         function moveToTop (list, id) {
