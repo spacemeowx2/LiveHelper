@@ -15,11 +15,6 @@
         });
     };
     var decodeHTMLEntry = function decodeHTMLEntry(s) {
-        // var converter = document.createElement("DIV"); 
-        // converter.innerHTML = s; 
-        // var output = converter.innerText; 
-        // converter = null; 
-        // return output; 
         var r = '';
         try {
             r = $.parseHTML(s)[0].textContent;
@@ -45,7 +40,7 @@
                     //timeout: 5000,
                     url: url,
                     type: type,
-                    data: data
+                    data: typeof data === 'function' ? data() : data
                 })).then(function (result) {
                     try {
                         result = f(result);
@@ -83,7 +78,7 @@
             return {
                 id: i.id,
                 title: i.name,
-                beginTime: i.start_time * 1000, //i.start_time*1000  不可靠
+                beginTime: i.start_time * 1000,
                 nick: i.userinfo.nickName,
                 online: i.person_num,
                 img: i.pictures.img,
@@ -92,8 +87,8 @@
         });
         return result;
     });
-    var zhanqi = siteFactory('zhanqi', '战旗', 'https://www.zhanqi.tv', 'https://www.zhanqi.tv/api/user/follow.listall', 'POST', { stamp: Math.random() }, function (result) {
-        result = result.data;
+    var zhanqi = siteFactory('zhanqi', '战旗', 'https://www.zhanqi.tv', 'https://www.zhanqi.tv/api/user/follow.listsbypage?page=1&nums=100', 'POST', { stamp: Math.random() }, function (result) {
+        result = result.data.list;
         result = result.filter(function (i) {
             return i.status == 4;
         });
@@ -110,11 +105,15 @@
         });
         return result;
     });
-    var huya = siteFactory('huya', '虎牙', 'https://www.huya.com', 'https://www.huya.com/udb_web/checkLogin.php', 'GET', { stamp: Math.random() }, function (result) {
+    var huya = siteFactory('huya', '虎牙', 'https://www.huya.com', 'https://www.huya.com/udb_web/checkLogin.php', 'GET', function () {
+        return { stamp: Math.random() };
+    }, function (result) {
         result = JSON.parse(result);
+        if (!result.isLogined) {
+            return Promise.reject('Not Login');
+        }
         var uid = result.uid;
         return $.get('https://fw.huya.com/dispatch?do=subscribeList&uid=' + uid + '&page=1&pageSize=20&_=' + new Date().getTime()).then(function (result) {
-            result = JSON.parse(result);
             result = result.result.list;
             result = result.filter(function (i) {
                 return i.isLive;
@@ -123,7 +122,7 @@
                 return {
                     id: i.yyid, //i.privateHost,
                     title: $('<span>' + i.intro + '</span>').text(),
-                    beginTime: new Date().getTime() - i.startTime * 1000 * 60,
+                    beginTime: i.startTime * 1000,
                     nick: i.nick,
                     online: i.totalCount,
                     img: i.screenshot,
@@ -133,28 +132,38 @@
             return result;
         });
     });
-    var bili = siteFactory('bilibili', '哔哩哔哩', 'https://live.bilibili.com', 'https://live.bilibili.com/feed/getList/1', 'POST', {}, function (result) {
-        result = JSON.parse(result);
-        result = result.data.list;
-        var getRoomDetail = function getRoomDetail(roomId, url) {
-            return $p($.get('https://live.bilibili.com/live/getInfo?roomid=' + roomId)).then(function (t) {
-                t = JSON.parse(t);
-                t = t.data;
-                return {
-                    id: roomId,
-                    title: t.ROOMTITLE,
-                    beginTime: t.LIVE_TIMELINE * 1000,
-                    nick: t.ANCHOR_NICK_NAME,
-                    online: false,
-                    img: t.COVER,
-                    url: url
-                };
-            });
-        };
 
-        return Promise.all(result.map(function (i) {
-            return getRoomDetail(i.roomid, i.link);
-        }));
+    var yy = siteFactory('yy', 'YY', 'http://www.yy.com', 'http://www.yy.com/yyweb/user/queryLivePreview.json', 'GET', {}, function (result) {
+        result = result.data.att;
+        return result.map(function (i) {
+            return {
+                id: i.anchorId,
+                title: i.title,
+                beginTime: i.liveTime,
+                nick: i.anchorInfo.nick,
+                online: i.users,
+                img: i.anchorInfo.hdLogo,
+                url: 'http://www.yy.com' + i.liveUrl
+            };
+        });
+    });
+
+    var bili = siteFactory('bilibili', '哔哩哔哩', 'https://live.bilibili.com', 'https://api.live.bilibili.com/feed/v1/feed/getList', 'GET', {
+        page: 1,
+        page_size: 100
+    }, function (result) {
+        result = result.data.rooms;
+        return result.map(function (i) {
+            return {
+                id: i.roomid,
+                title: i.title,
+                beginTime: i.liveTime * 1000,
+                nick: i.nickname,
+                online: i.online,
+                img: i.keyframe,
+                url: i.link
+            };
+        });
     });
 
     var quanmin = siteFactory('quanmin', '全民', 'https://www.quanmin.tv', 'https://www.quanmin.tv/api/v1', 'POST', { m: 'user.getfollowlist', p: { page: 0, size: 50 } }, function (result) {
@@ -284,7 +293,7 @@
         });
     };
 
-    var huomao = siteFactory('huomao', '火猫', 'https://www.huomaotv.cn', 'https://www.huomao.com/subscribe/getUsersSubscribe', 'GET', {}, function (result) {
+    var huomao = siteFactory('huomao', '火猫', 'https://www.huomao.com', 'https://www.huomao.com/subscribe/getUsersSubscribe', 'GET', {}, function (result) {
         result = result.data.usersSubChannels;
         result = result.filter(function (i) {
             return i.is_live == '1';
@@ -412,51 +421,8 @@
             });
         });
     };
-    bili.getFullFollowList = function () {
-        var BLAPISign = function BLAPISign(paramObj) {
-            var ps = Object.keys(paramObj).sort().map(function (k) {
-                return k + '=' + paramObj[k];
-            }).join('&');
-            return md5(ps + 'ea85624dfcf12d7cc7b2b3a94fac1f2c');
-        };
-        var getRoomDetail = function getRoomDetail(roomId, url) {
-            var paramObj = {
-                room_id: roomId,
-                _device: 'android',
-                _hwid: '6f17ba11164894fb',
-                appkey: 'c1b107428d337928',
-                build: '411005',
-                buld: '411005',
-                platform: 'android'
-            };
-            paramObj['sign'] = BLAPISign(paramObj);
-            //console.log(paramObj);
 
-            return $p($.get('https://live.bilibili.com/api/room_info', paramObj)).then(function (t) {
-                t = t.data;
-                return {
-                    id: roomId,
-                    title: decodeHTMLEntry(t.title),
-                    beginTime: false,
-                    nick: t.uname,
-                    online: t.online,
-                    img: t.cover,
-                    url: url
-                };
-            });
-        };
-        return $p($.get('https://live.bilibili.com/feed/getList/1')).then(function (result) {
-            result = result.substr(1, result.length - 3);
-            result = JSON.parse(result);
-            result = result.data.list;
-            return Promise.all(result.map(function (i) {
-                return getRoomDetail(i.roomid, i.link);
-            }));
-        });
-    };
-    //bili.getFullFollowList = false;
-
-    window.fetchers = [douyu, panda, zhanqi, huya, bili, quanmin, niconico, twitch, huomao, longzhu, necc, egameqq];
+    window.fetchers = [douyu, panda, zhanqi, huya, bili, quanmin, niconico, twitch, huomao, longzhu, necc, egameqq, yy];
     window.enabledFetchers = function () {
         var list = fetchers.filter(function (i) {
             return config.enabled[i.id];

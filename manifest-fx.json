@@ -3,7 +3,7 @@
   "default_locale": "zh_CN",
   "name": "__MSG_extName__",
   "description": "__MSG_extDescription__",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "options_ui": {
     "page": "options.html"
   },
@@ -37,6 +37,7 @@
     "*://*.quanmin.tv/*",
     "*://*.163.com/*",
     "*://egame.qq.com/*",
+    "*://*.yy.com/*",
     "https://imspace.applinzi.com/*",
     "*://*.douyucdn.cn/*",
     "*://*.pdim.gs/*",
