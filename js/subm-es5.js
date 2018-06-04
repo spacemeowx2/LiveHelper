@@ -120,13 +120,13 @@
             });
             result = result.map(function (i) {
                 return {
-                    id: i.yyid, //i.privateHost,
+                    id: i.profileRoom,
                     title: $('<span>' + i.intro + '</span>').text(),
                     beginTime: i.startTime * 1000,
                     nick: i.nick,
                     online: i.totalCount,
                     img: i.screenshot,
-                    url: 'https://www.huya.com/' + i.yyid //i.privateHost
+                    url: 'https://www.huya.com/' + i.profileRoom
                 };
             });
             return result;
