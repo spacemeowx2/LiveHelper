@@ -331,16 +331,20 @@
         return result;
     });
 
-    var necc = siteFactory('necc', '网易CC', 'http://cc.163.com/', 'http://cc.163.com/user/follow/?format=json&page=1&size=20', 'GET', { format: 'json', page: '1', size: '20' }, function (result) {
-        result = result.lives;
+    var necc = siteFactory('necc', '网易CC', 'http://cc.163.com/', 'http://cc.163.com/user/follow/?format=json&page=1&size=20', 'GET', {}, function (result) {
+        result = result.follow_list;
+        //网易CC在浏览器冷启动后的第一次后台调用中由于跳转速度较慢，因此会出现获取到的result为跳转页面，出现过滤错误为正常现象
+        result = result.filter(function (i) {
+            return i.is_live == '1';
+        });
         result = result.map(function (i) {
             return {
                 id: i.ccid,
-                title: i.title,
-                beginTime: new Date(i.startat * 1000).getTime(),
+                title: i.gamename,
+                beginTime: false,
                 nick: i.nickname,
-                online: i.visitor,
-                img: i.cover,
+                online: i.webcc_visitor,
+                img: i.purl,
                 url: 'http://cc.163.com/' + i.ccid,
                 forceRatio: true
             };
