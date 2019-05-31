@@ -1,22 +1,19 @@
 {
-  "name": "livehelper",
-  "version": "1.0.20",
+  "name": "live-helper",
+  "version": "1.0.0",
   "description": "帮你整合多个直播网站的关注列表",
-  "main": "build/index.js",
+  "main": "index.js",
   "scripts": {
-    "build": "node build/build.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git@git.coding.net:imspace/LiveHelper.git"
+    "url": "git+https://github.com/spacemeowx2/LiveHelper.git"
   },
-  "author": "space",
+  "author": "",
   "license": "MIT",
-  "dependencies": {
-    "archiver": "^1.1.0",
-    "babel-core": "^6.14.0",
-    "babel-polyfill": "^6.13.0",
-    "babel-preset-es2015": "^6.14.0"
-  }
+  "bugs": {
+    "url": "https://github.com/spacemeowx2/LiveHelper/issues"
+  },
+  "homepage": "https://github.com/spacemeowx2/LiveHelper#readme"
 }
