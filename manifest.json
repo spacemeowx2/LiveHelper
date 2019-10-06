@@ -1,6 +1,6 @@
 {
     "manifest_version": 2,
-    
+
     "default_locale": "zh_CN",
     "name": "__MSG_extName__",
     "description": "__MSG_extDescription__",
@@ -12,15 +12,16 @@
     "icons": {
         "256":"icon/icon.png"
     },
-    
+
     "browser_action": {
         "browser_style": true,
         "default_icon": "icon/icon-64.png",
         "default_popup": "popup.html"
     },
-	
+
 	"background": {
-		"page": "background.html"
+        "scripts": ["js/amd.js", "dist/background.js"],
+        "persistent": false
 	},
 
     "permissions": [
@@ -43,9 +44,9 @@
         "*://*.163.com/*",
         "*://egame.qq.com/*",
         "*://*.yy.com/*",
-        
+
         "https://imspace.applinzi.com/*",
-        
+
         "*://*.douyucdn.cn/*",
         "*://*.pdim.gs/*",
         "*://*.hdslb.com/*",
@@ -55,12 +56,12 @@
         "*://*.nimg.jp/*",
         "*://*.myqcloud.com/*"
     ],
-    
+
     "web_accessible_resources": [
         "icon.png",
 		"*://*"
     ],
-    
+
     "content_scripts": [
         {
             "matches": [
