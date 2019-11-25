@@ -1,74 +1,61 @@
 {
-    "manifest_version": 2,
+  "manifest_version": 2,
 
-    "default_locale": "zh_CN",
-    "name": "__MSG_extName__",
-    "description": "__MSG_extDescription__",
-    "version": "1.0.20",
-    "options_ui": {
-        "page": "options.html"
-    },
+  "default_locale": "zh_CN",
+  "name": "__MSG_extName__",
+  "description": "__MSG_extDescription__",
+  "version": "1.0.20",
+  "options_ui": {
+    "page": "options.html"
+  },
 
-    "icons": {
-        "256":"icon/icon.png"
-    },
+  "icons": {
+    "256":"icon/icon.png"
+  },
 
-    "browser_action": {
-        "browser_style": true,
-        "default_icon": "icon/icon-64.png",
-        "default_popup": "popup.html"
-    },
+  "browser_action": {
+    "browser_style": true,
+    "default_icon": "icon/icon-64.png",
+    "default_popup": "dist/popup.html"
+  },
 
-	"background": {
-        "scripts": ["js/amd.js", "dist/background.js"],
-        "persistent": false
-	},
+  "background": {
+    "scripts": ["dist/background.js"],
+    "persistent": false
+  },
 
-    "permissions": [
-        "cookies",
-        "notifications",
-        "webRequest",
-        "webRequestBlocking",
-        "background",
-        "*://*.douyu.com/*",
-        "*://*.panda.tv/*",
-        "*://*.zhanqi.tv/*",
-        "*://*.huya.com/*",
-        "*://*.bilibili.com/*",
-        "*://*.nicovideo.jp/*",
-        "*://*.twitch.tv/*",
-        "*://*.huomaotv.cn/*",
-        "*://*.huomao.com/*",
-        "*://userapi.plu.cn/*",
-        "*://*.quanmin.tv/*",
-        "*://*.163.com/*",
-        "*://egame.qq.com/*",
-        "*://*.yy.com/*",
+  "permissions": [
+    "alarms",
+    "cookies",
+    "notifications",
+    "background",
+    "*://*.douyu.com/*",
+    "*://*.panda.tv/*",
+    "*://*.zhanqi.tv/*",
+    "*://*.huya.com/*",
+    "*://*.bilibili.com/*",
+    "*://*.nicovideo.jp/*",
+    "*://*.twitch.tv/*",
+    "*://*.huomaotv.cn/*",
+    "*://*.huomao.com/*",
+    "*://userapi.plu.cn/*",
+    "*://*.quanmin.tv/*",
+    "*://*.163.com/*",
+    "*://egame.qq.com/*",
+    "*://*.yy.com/*",
 
-        "https://imspace.applinzi.com/*",
+    "*://*.douyucdn.cn/*",
+    "*://*.pdim.gs/*",
+    "*://*.hdslb.com/*",
+    "*://*.plures.net/*",
+    "*://*.dwstatic.com/*",
+    "*://*.jtvnw.net/*",
+    "*://*.nimg.jp/*",
+    "*://*.myqcloud.com/*"
+  ],
 
-        "*://*.douyucdn.cn/*",
-        "*://*.pdim.gs/*",
-        "*://*.hdslb.com/*",
-        "*://*.plures.net/*",
-        "*://*.dwstatic.com/*",
-        "*://*.jtvnw.net/*",
-        "*://*.nimg.jp/*",
-        "*://*.myqcloud.com/*"
-    ],
-
-    "web_accessible_resources": [
-        "icon.png",
-		"*://*"
-    ],
-
-    "content_scripts": [
-        {
-            "matches": [
-                "http://*.douyu.com/*",
-                "https://*.douyu.com/*"
-            ],
-            "js": ["js/pcs.js"]
-        }
-    ]
+  "web_accessible_resources": [
+    "icon.png",
+    "*://*"
+  ]
 }

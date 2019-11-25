@@ -1,4 +1,4 @@
-#list {
+body {
     width: 400px;
     max-height: 600px;
     overflow-y: auto;
@@ -17,7 +17,7 @@ body {
     background-color: #E5E5E5;
 }
 .site-template {
-    background-color: #ffffff; 
+    background-color: #ffffff;
 }
 .site-template .site-header {
     padding: 5px 5px;
