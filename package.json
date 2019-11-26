@@ -28,5 +28,8 @@
   "alias": {
     "react": "preact/compat",
     "react-dom": "preact/compat"
-  }
+  },
+  "browserslist": [
+    "last 2 Chrome versions"
+  ]
 }

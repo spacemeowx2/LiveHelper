@@ -33,7 +33,7 @@ export class Result<T, E> {
 }
 
 const websites: WebSite[] = []
-export function registerWebSite (id: string, website: WebSite) {
+export function registerWebSite (website: WebSite) {
   websites.push(website)
 }
 export function getWebSites () {

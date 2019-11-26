@@ -26,7 +26,11 @@ if (EnablePolling) {
   })
 }
 
-function poll() {
+async function poll() {
+  for (const w of getWebSites()) {
+    const r = await w.getLiving()
+    console.log(r)
+  }
   console.log('poll')
 }
-console.log(getWebSites())
+poll()
