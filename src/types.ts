@@ -15,7 +15,21 @@ export interface Living {
   url: string
 }
 export interface WebSite {
-  getLiving (): Promise<Living[]>
+  getLiving: () => Promise<Living[]>
+}
+export class Result<T, E> {
+  ok?: T
+  err?: E
+  is_ok: boolean
+  constructor(f: () => T) {
+    try {
+      this.ok = f()
+      this.is_ok = true
+    } catch(e) {
+      this.err = e
+      this.is_ok = false
+    }
+  }
 }
 
 const websites: WebSite[] = []
