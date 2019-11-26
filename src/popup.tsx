@@ -28,7 +28,7 @@ const Site: React.FC<{
 }> = ({ id, item }) => {
   return <div className='site'>
     <div className='site-header'>{id}</div>
-    { item.content.map(i => <Item room={i} />) }
+    { item.content.map((i, id) => <Item key={id} room={i} />) }
   </div>
 }
 
@@ -44,7 +44,7 @@ const Popup: React.FC = () => {
   const keys = Object.keys(list)
 
   return <div>
-    { keys.map(k => <Site id={k} item={list[k]} />) }
+    { keys.map(k => <Site key={k} id={k} item={list[k]} />) }
   </div>
 }
 
