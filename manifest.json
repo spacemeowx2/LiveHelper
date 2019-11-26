@@ -29,6 +29,7 @@
     "cookies",
     "notifications",
     "background",
+    "storage",
     "*://*.douyu.com/*",
     "*://*.panda.tv/*",
     "*://*.zhanqi.tv/*",

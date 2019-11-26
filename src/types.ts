@@ -6,30 +6,22 @@ export class PollError extends Error {
     super()
   }
 }
+export type Maybe<T> = T | undefined | null
 export interface Living {
   title: string
   preview: string
-  start_at: number
+  startAt: Maybe<number>
   author: string
-  online: string
+  online: Maybe<number>
   url: string
 }
 export interface WebSite {
+  getId: () => string
   getLiving: () => Promise<Living[]>
 }
-export class Result<T, E> {
-  ok?: T
-  err?: E
-  is_ok: boolean
-  constructor(f: () => T) {
-    try {
-      this.ok = f()
-      this.is_ok = true
-    } catch(e) {
-      this.err = e
-      this.is_ok = false
-    }
-  }
+export interface CacheItem<T> {
+  lastUpdate: number
+  content: T
 }
 
 const websites: WebSite[] = []
