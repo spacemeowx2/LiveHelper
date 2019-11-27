@@ -696,6 +696,25 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@fluent/bundle@^0.14.0":
+  version "0.14.0"
+  resolved "https://registry.npm.taobao.org/@fluent/bundle/download/@fluent/bundle-0.14.0.tgz#b7ce7caf132966e4e40ed762f265c2b61f98eff2"
+  integrity sha1-t858rxMpZuTkDtdi8mXCth+Y7/I=
+
+"@fluent/react@^0.10.0":
+  version "0.10.0"
+  resolved "https://registry.npm.taobao.org/@fluent/react/download/@fluent/react-0.10.0.tgz#ce15d8fcf18882594569d07be3fc4d266d322c6a"
+  integrity sha1-zhXY/PGIgllFadB74/xNJm0yLGo=
+  dependencies:
+    "@fluent/sequence" "0.4.0"
+    cached-iterable "^0.2.1"
+    prop-types "^15.6.0"
+
+"@fluent/sequence@0.4.0":
+  version "0.4.0"
+  resolved "https://registry.npm.taobao.org/@fluent/sequence/download/@fluent/sequence-0.4.0.tgz#ddba05770fa8a1259dca302ca3530af26c38599a"
+  integrity sha1-3boFdw+ooSWdyjAso1MK8mw4WZo=
+
 "@iarna/toml@^2.2.0":
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/@iarna/toml/-/toml-2.2.3.tgz#f060bf6eaafae4d56a7dac618980838b0696e2ab"
@@ -773,6 +792,29 @@
   version "0.0.28"
   resolved "https://registry.npm.taobao.org/@types/filewriter/download/@types/filewriter-0.0.28.tgz#c054e8af4d9dd75db4e63abc76f885168714d4b3"
   integrity sha1-wFTor02d11205jq8dviFFocU1LM=
+
+"@types/fluent__bundle@*", "@types/fluent__bundle@^0.14.1":
+  version "0.14.1"
+  resolved "https://registry.npm.taobao.org/@types/fluent__bundle/download/@types/fluent__bundle-0.14.1.tgz#5e62f56295c675262272d187736d85716f3e5adc"
+  integrity sha1-XmL1YpXGdSYictGHc22FcW8+Wtw=
+
+"@types/fluent__react@^0.10.0":
+  version "0.10.0"
+  resolved "https://registry.npm.taobao.org/@types/fluent__react/download/@types/fluent__react-0.10.0.tgz#9c31e1c84d321cc81b43f23195e21779263fddd3"
+  integrity sha1-nDHhyE0yHMgbQ/IxleIXeSY/3dM=
+  dependencies:
+    "@types/fluent__bundle" "*"
+    "@types/hoist-non-react-statics" "*"
+    "@types/react" "*"
+    csstype "^2.2.0"
+
+"@types/hoist-non-react-statics@*":
+  version "3.3.1"
+  resolved "https://registry.npm.taobao.org/@types/hoist-non-react-statics/download/@types/hoist-non-react-statics-3.3.1.tgz#1124aafe5118cb591977aeb1ceaaed1070eb039f"
+  integrity sha1-ESSq/lEYy1kZd66xzqrtEHDrA58=
+  dependencies:
+    "@types/react" "*"
+    hoist-non-react-statics "^3.3.0"
 
 "@types/prop-types@*":
   version "15.7.3"
@@ -1291,6 +1333,11 @@ cache-base@^1.0.1:
     to-object-path "^0.3.0"
     union-value "^1.0.0"
     unset-value "^1.0.0"
+
+cached-iterable@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.npm.taobao.org/cached-iterable/download/cached-iterable-0.2.1.tgz#723958f5e7adc74c96bedb10b426bdfd95f2fe6d"
+  integrity sha1-cjlY9eetx0yWvtsQtCa9/ZXy/m0=
 
 call-me-maybe@^1.0.1:
   version "1.0.1"
@@ -2604,6 +2651,13 @@ hmac-drbg@^1.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.1"
 
+hoist-non-react-statics@^3.3.0:
+  version "3.3.1"
+  resolved "https://registry.npm.taobao.org/hoist-non-react-statics/download/hoist-non-react-statics-3.3.1.tgz#101685d3aff3b23ea213163f6e8e12f4f111e19f"
+  integrity sha1-EBaF06/zsj6iExY/bo4S9PER4Z8=
+  dependencies:
+    react-is "^16.7.0"
+
 hsl-regex@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/hsl-regex/download/hsl-regex-1.0.0.tgz#d49330c789ed819e276a4c0d272dffa30b18fe6e"
@@ -3237,7 +3291,7 @@ longest@^1.0.1:
   resolved "https://registry.yarnpkg.com/longest/-/longest-1.0.1.tgz#30a0b2da38f73770e8294a0d22e6625ed77d0097"
   integrity sha1-MKCy2jj3N3DoKUoNIuZiXtd9AJc=
 
-loose-envify@^1.0.0:
+loose-envify@^1.0.0, loose-envify@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.4.0.tgz#71ee51fa7be4caec1a63839f7e682d8132d30caf"
   integrity sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==
@@ -4378,6 +4432,15 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
+prop-types@^15.6.0:
+  version "15.7.2"
+  resolved "https://registry.npm.taobao.org/prop-types/download/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
+  integrity sha1-UsQedbjIfnK52TYOAga5ncv/psU=
+  dependencies:
+    loose-envify "^1.4.0"
+    object-assign "^4.1.1"
+    react-is "^16.8.1"
+
 prr@~1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/prr/-/prr-1.0.1.tgz#d3fc114ba06995a45ec6893f484ceb1d78f5f476"
@@ -4483,6 +4546,11 @@ rc@^1.2.7:
     ini "~1.3.0"
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
+
+react-is@^16.7.0, react-is@^16.8.1:
+  version "16.12.0"
+  resolved "https://registry.npm.taobao.org/react-is/download/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
+  integrity sha1-LMD+D7p0LZf9UnxCoTvsTusGJBw=
 
 readable-stream@^2.0.2, readable-stream@^2.0.6, readable-stream@^2.2.2, readable-stream@^2.3.3, readable-stream@^2.3.6, readable-stream@~2.3.3, readable-stream@~2.3.6:
   version "2.3.6"

@@ -1,8 +1,18 @@
 import { parse, HTMLElement } from 'node-html-parser'
+import { useState, useEffect } from 'react'
 export { HTMLElement } from 'node-html-parser'
 
+export function useNow() {
+  const [ time, setTime ] = useState(now())
+  useEffect(() => {
+    const id = setInterval(() => setTime(now()), 1000)
+    return () => clearInterval(id)
+  }, [])
+  return time
+}
+
 export function now() {
-  return Math.floor(+new Date())
+  return Math.floor(+new Date() / 1000)
 }
 
 export function parseJSON(s: any, def: any = undefined) {

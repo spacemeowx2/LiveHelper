@@ -15,7 +15,11 @@
   "author": "space",
   "license": "MIT",
   "dependencies": {
+    "@fluent/bundle": "^0.14.0",
+    "@fluent/react": "^0.10.0",
     "@types/chrome": "0.0.89",
+    "@types/fluent__bundle": "^0.14.1",
+    "@types/fluent__react": "^0.10.0",
     "@types/react": "^16.9.13",
     "@types/react-dom": "^16.9.4",
     "node-html-parser": "^1.1.16",
