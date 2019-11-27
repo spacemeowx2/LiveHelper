@@ -24,20 +24,21 @@ const Item: React.FC<{ room: Living }> = ({ room: {
   const hour = min ? Math.round(min / 60) : null
   return <div className='room' onClick={onClick}>
     <img className='preview' src={preview} />
-    <div className='detail'>
+    <div className='right'>
       <p className='title'>{title}</p>
-      <span className='time'><Localized
-        id='time-passed'
-        $hour={hour}
-        $min={min}
-        $sec={sec}
-      /></span>
-      <span className='author'>{author}</span>
-      <span className='online'><Localized
-        id='online'
-        $count={online}
-        $count_k={online / 1000}
-      /></span>
+      <div className='detail'>
+        <span className='time'><Localized
+          id='time-passed'
+          $hour={hour}
+          $min={min}
+          $sec={sec}
+        /></span>
+        <span className='author'>{author}</span>
+        <span className='online'><Localized
+          id='online'
+          $online={online}
+        /></span>
+      </div>
     </div>
   </div>
 }

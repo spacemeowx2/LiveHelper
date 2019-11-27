@@ -59,7 +59,7 @@ body {
   border-radius: 2px;
   transition: all .3s ease;
 }
-.room .detail {
+.room .right {
   box-sizing: border-box;
   float: left;
   padding-top: 8px;
@@ -68,33 +68,38 @@ body {
   height: 68px;
   transition: all .3s ease;
 
-  span {
-    display: block;
-    float: left;
-    color: #a0a0a0;
-    width: 100px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    font-size: 12px
+  .detail {
+    display: flex;
+    margin-top: 15px;
+
+    span {
+      flex: auto;
+      display: inline-block;
+      color: #a0a0a0;
+      width: 100px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      font-size: 12px
+    }
+    .time {
+      padding: 0 2px 0 20px;
+      background: url(../img/head_ricon.png) 0 -145px no-repeat
+    }
+    .author {
+      padding: 0 2px 0 18px;
+      background: url(../img/head_ricon.png) 0 -29px no-repeat;
+      width: 110px
+    }
+    .online {
+      padding-left: 18px;
+      background: url(../img/head_ricon.png) 0 -48px no-repeat;
+      width: 60px
+    }
+    .title {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
-}
-.room .time {
-  padding: 0 2px 0 20px;
-  background: url(../img/head_ricon.png) 0 -145px no-repeat
-}
-.room .author {
-  padding: 0 2px 0 18px;
-  background: url(../img/head_ricon.png) 0 -29px no-repeat;
-  width: 110px
-}
-.room .online {
-  padding-left: 18px;
-  background: url(../img/head_ricon.png) 0 -48px no-repeat;
-  width: 60px
-}
-.room .title {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
