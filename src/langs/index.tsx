@@ -48,6 +48,6 @@ const bundles = langs.map(i => BundleMap[i]).filter(Boolean)
 
 export const LocalizationProvider: React.FC = ({ children }) => {
   return <LP bundles={bundles}>
-    {children}
+    <>{children}</>
   </LP>
 }

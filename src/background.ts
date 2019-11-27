@@ -10,12 +10,12 @@ console.log('EnablePolling', EnablePolling)
 
 chrome.runtime.onConnect.addListener(async (port) => {
   console.log('on connect')
-  console.assert(port.name == 'channel')
-
-  sync(port)
-  listening.add(port)
-  port.onDisconnect.addListener(onPortDisconnect)
-  await poll()
+  if (port.name === 'channel') {
+    sync(port)
+    listening.add(port)
+    port.onDisconnect.addListener(onPortDisconnect)
+    await poll()
+  }
 })
 
 if (EnablePolling) {

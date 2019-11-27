@@ -13,4 +13,7 @@ online =
       [LT] {$online}
       *[other] {NUMBER(DIV($online, 10000), maximumFractionDigits: 1)}万
   }
+options = 选项
+website-title = 网站
+  .subTitle = 在你想观看的网站前面打勾
 `

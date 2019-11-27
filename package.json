@@ -4,8 +4,8 @@
   "description": "帮你整合多个直播网站的关注列表",
   "main": "build/index.js",
   "scripts": {
-    "build": "parcel build src/popup.html src/background.ts --public-url ./ --experimental-scope-hoisting --no-content-hash",
-    "watch": "parcel watch src/popup.html src/background.ts --public-url ./ --no-hmr",
+    "build": "parcel build src/*.html src/background.ts --public-url ./ --experimental-scope-hoisting --no-content-hash",
+    "watch": "parcel watch src/*.html src/background.ts --public-url ./ --no-hmr",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

@@ -6,7 +6,7 @@
   "description": "__MSG_extDescription__",
   "version": "1.0.20",
   "options_ui": {
-    "page": "options.html"
+    "page": "dist/options.html"
   },
 
   "icons": {
