@@ -1,6 +1,6 @@
 import './websites'
 import { getWebSites, Living, CacheItem } from './types'
-import { LocalMap } from '~/utils'
+import { LocalMap, now } from '~/utils'
 
 const listening: Set<chrome.runtime.Port> = new Set()
 const EnablePolling = localStorage.getItem('EnablePolling')
@@ -9,6 +9,7 @@ let lastPoll = 0
 console.log('EnablePolling', EnablePolling)
 
 chrome.runtime.onConnect.addListener(async (port) => {
+  console.log('on connect')
   console.assert(port.name == 'channel')
 
   sync(port)
@@ -20,15 +21,19 @@ chrome.runtime.onConnect.addListener(async (port) => {
 if (EnablePolling) {
   chrome.alarms.create({
     delayInMinutes: 1,
-    periodInMinutes: 1,
+    periodInMinutes: 5,
   })
   chrome.alarms.onAlarm.addListener(() => {
     poll()
   })
 }
 
+function orderBy(b: Living, a: Living) {
+  return (a.online || 0) - (b.online || 0)
+}
+
 async function poll() {
-  if (+new Date() - lastPoll <= 1000 * 60) {
+  if (now() - lastPoll <= 60) {
     return
   }
   const startTime = +new Date()
@@ -36,17 +41,16 @@ async function poll() {
   await Promise.all(getWebSites().map(async w => {
     const living = await w.getLiving()
     cache.set(w.getId(), {
-      lastUpdate: +new Date(),
-      content: living
+      lastUpdate: now(),
+      content: living.sort(orderBy)
     })
   }))
   console.log('poll done', +new Date() - startTime)
   for (const p of listening) {
     sync(p)
   }
-  lastPoll = +new Date()
+  lastPoll = now()
 }
-poll()
 
 function sync(port: chrome.runtime.Port) {
   port.postMessage({ type: 'sync', cache })

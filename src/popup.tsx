@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { render } from 'react-dom'
 import { CacheItem, Living } from './types'
+import { now } from './utils'
 
 type Cache = Record<string, CacheItem<Living[]>>
 
@@ -10,13 +11,17 @@ const Item: React.FC<{ room: Living }> = ({ room: {
   author,
   startAt,
   online,
+  url,
 } }) => {
-  return <div className='room'>
+  const time = startAt ? now() - startAt : null
+  return <div className='room' onClick={useCallback(() => {
+    window.open(url)
+  }, [url])}>
     <img className='preview' src={preview} />
     <div className='detail'>
       <p className='title'>{title}</p>
-      <span className='time'>{startAt}</span>
-      <span className='nickname'>{author}</span>
+      <span className='time'>{time}</span>
+      <span className='author'>{author}</span>
       <span className='online'>{online}</span>
     </div>
   </div>
@@ -38,9 +43,10 @@ const Popup: React.FC = () => {
     const port = chrome.runtime.connect({name: 'channel'})
     port.onMessage.addListener((m) => {
       setList(m.cache)
+      console.log('on message')
     })
     return () => port.disconnect()
-  })
+  }, [])
   const keys = Object.keys(list)
 
   return <div>

@@ -1,5 +1,5 @@
 import { registerWebSite, Living } from '../types'
-import { parseHTML, HTMLElement, mapFilter } from '~/utils'
+import { parseHTML, HTMLElement, mapFilter, now } from '~/utils'
 
 function getInfoFromItem (item: HTMLElement): Living | undefined {
   if (!item.querySelector('i.icon_live')) {
@@ -12,7 +12,7 @@ function getInfoFromItem (item: HTMLElement): Living | undefined {
     beginTime = null
   } else {
     beginTime = parseInt(timeRE[1])
-    beginTime = (new Date).getTime() - beginTime * 1000 * 60
+    beginTime = now() - beginTime * 60
   }
 
   let roomid = item.querySelector('div div a')?.attributes['href']?.replace('/', '');

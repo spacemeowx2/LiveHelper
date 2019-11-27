@@ -1,6 +1,10 @@
 import { parse, HTMLElement } from 'node-html-parser'
 export { HTMLElement } from 'node-html-parser'
 
+export function now() {
+  return Math.floor(+new Date())
+}
+
 export function parseJSON(s: any, def: any = undefined) {
   try {
     return JSON.parse(s)
