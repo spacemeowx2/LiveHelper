@@ -1,10 +1,15 @@
 export enum PollErrorType {
   NotLogin,
+  Other,
 }
 export class PollError extends Error {
-  constructor (private type: PollErrorType) {
+  constructor (public readonly type: PollErrorType) {
     super()
   }
+}
+export interface CacheError {
+  type: PollErrorType
+  message?: string
 }
 export type Maybe<T> = T | undefined | null
 export interface Living {
@@ -22,12 +27,21 @@ export interface Living {
   url: string
 }
 export interface WebSite {
-  getId: () => string
+  readonly id: string
   getLiving: () => Promise<Living[]>
 }
-export interface CacheItem<T> {
+export type CacheItem<T> = {
   lastUpdate: number
   content: T
+} | {
+  lastUpdate: number
+  error: CacheError
+}
+export function CacheHasContent<T> (i: CacheItem<T>): i is {
+  lastUpdate: number
+  content: T
+} {
+  return Object.keys(i).indexOf('content') !== -1
 }
 
 const websites: WebSite[] = []

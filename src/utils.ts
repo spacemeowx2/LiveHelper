@@ -1,6 +1,9 @@
 import { parse, HTMLElement } from 'node-html-parser'
 import { useState, useEffect } from 'react'
+import deepmerge from 'deepmerge'
+
 export { HTMLElement } from 'node-html-parser'
+export { deepmerge }
 
 export function useNow() {
   const [ time, setTime ] = useState(now())

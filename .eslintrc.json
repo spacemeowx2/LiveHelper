@@ -1,0 +1,36 @@
+{
+  "env": {
+    "es6": true,
+    "node": true,
+    "browser": true,
+    "webextensions": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "warnOnUnsupportedTypeScriptVersion": true
+  },
+  "settings": {
+    "react": {
+      "version": "ignore"
+    }
+  },
+  "plugins": [
+    "react",
+    "react-hooks",
+    "import"
+  ],
+  "extends": [
+    "eslint-config-react-app",
+    "eslint:recommended"
+  ],
+  "rules": {
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "import/newline-after-import": "error"
+  }
+}

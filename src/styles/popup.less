@@ -1,7 +1,8 @@
 body {
-  width: 400px;
+  min-width: 400px;
   max-height: 600px;
   overflow-y: auto;
+  font-size: 14px;
 }
 
 html, body, * {
@@ -21,6 +22,10 @@ body {
 .site {
   background-color: #ffffff;
   .site-header {
+    z-index: 1;
+    background: white;
+    position: sticky;
+    top: 0;
     padding: 5px 5px;
     cursor: pointer;
     border: 1px solid #E5E5E5;
@@ -101,5 +106,25 @@ body {
       text-overflow: ellipsis;
       white-space: nowrap;
     }
+  }
+}
+
+.status {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 10;
+  padding-top: 5px;
+
+  .polling {
+    float: right;
+    vertical-align: middle;
+    line-height: 20px;
+    height: 20px;
+    transition: all .1s ease;
+    transform: translateY(-200%);
+  }
+  &[data-polling] .polling {
+    transform: translateY(0);
   }
 }

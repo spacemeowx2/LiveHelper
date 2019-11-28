@@ -1,1 +1,2 @@
 import './douyu'
+import './bilibili'

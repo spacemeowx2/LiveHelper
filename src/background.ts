@@ -1,10 +1,11 @@
-import './websites'
-import { getWebSites, Living, CacheItem } from './types'
+import { Living, CacheItem, CacheError, PollError, PollErrorType } from './types'
 import { LocalMap, now } from '~/utils'
+import * as config from './config'
 
 const listening: Set<chrome.runtime.Port> = new Set()
 const EnablePolling = localStorage.getItem('EnablePolling')
 const cache = new LocalMap<CacheItem<Living[]>>('cache')
+let polling = false
 let lastPoll = 0
 console.log('EnablePolling', EnablePolling)
 
@@ -33,27 +34,59 @@ function orderBy(b: Living, a: Living) {
 }
 
 async function poll() {
-  if (now() - lastPoll <= 60) {
+  if (now() - lastPoll <= 10) {
     return
   }
   const startTime = +new Date()
-  console.log('poll start')
-  await Promise.all(getWebSites().map(async w => {
-    const living = await w.getLiving()
-    cache.set(w.getId(), {
-      lastUpdate: now(),
-      content: living.sort(orderBy)
-    })
+  polling = true
+  syncAll()
+  await Promise.all(config.getEnabledWebsites().map(async w => {
+    let error: CacheError | undefined
+    try {
+      const living = await w.getLiving()
+      cache.set(w.id, {
+        lastUpdate: now(),
+        content: living.sort(orderBy),
+        error,
+      })
+    } catch (e) {
+      if (e instanceof PollError) {
+        error = {
+          type: e.type,
+          message: e.message,
+        }
+      } else {
+        error = {
+          type: PollErrorType.Other,
+          message: e.message
+        }
+      }
+      cache.set(w.id, {
+        lastUpdate: now(),
+        content: [],
+        error,
+      })
+    }
   }))
+  polling = false
   console.log('poll done', +new Date() - startTime)
+  // eslint-disable-next-line
+  lastPoll = now()
+  syncAll()
+}
+
+function syncAll() {
   for (const p of listening) {
     sync(p)
   }
-  lastPoll = now()
 }
 
 function sync(port: chrome.runtime.Port) {
-  port.postMessage({ type: 'sync', cache })
+  port.postMessage({
+    type: 'sync',
+    cache: cache.toJSON(),
+    polling,
+  })
 }
 
 function onPortDisconnect(port: chrome.runtime.Port) {

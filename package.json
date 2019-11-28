@@ -1,6 +1,6 @@
 {
   "name": "livehelper",
-  "version": "1.0.20",
+  "version": "2.0.0",
   "description": "帮你整合多个直播网站的关注列表",
   "main": "build/index.js",
   "scripts": {
@@ -22,14 +22,26 @@
     "@types/fluent__react": "^0.10.0",
     "@types/react": "^16.9.13",
     "@types/react-dom": "^16.9.4",
+    "deepmerge": "^4.2.2",
     "node-html-parser": "^1.1.16",
     "preact": "^10.0.5",
     "typescript": "^3.6.3",
     "utils": "^0.3.1"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.9.0",
+    "@typescript-eslint/parser": "^2.9.0",
     "cssnano": "^4.1.10",
+    "eslint": "^6.7.1",
+    "eslint-config-react-app": "^5.0.2",
+    "eslint-plugin-flowtype": "^4.5.2",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-react-hooks": "^2.3.0",
+    "husky": "^3.1.0",
     "less": "^3.10.3",
+    "lint-staged": "^9.5.0",
     "parcel": "^1.12.4"
   },
   "alias": {
@@ -38,5 +50,14 @@
   },
   "browserslist": [
     "last 2 Chrome versions"
-  ]
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.ts": "eslint",
+    "*.tsx": "eslint"
+  }
 }

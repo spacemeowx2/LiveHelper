@@ -34,7 +34,7 @@ registerWebSite({
 
     return mapFilter(list, getInfoFromItem)
   },
-  getId () {
+  get id () {
     return 'douyu'
   }
 })
