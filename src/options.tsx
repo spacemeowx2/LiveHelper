@@ -95,7 +95,7 @@ const Options: React.FC = () => {
     const ret = deepmerge(config, newConfig)
     console.log('set', config, newConfig, ret)
     setConfigOri(newConfig)
-  }, [  ])
+  }, [ config ])
   useEffect(() => {
     cfg.getConfig().then(setConfigOri)
   }, [])

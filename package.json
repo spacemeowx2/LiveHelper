@@ -6,6 +6,7 @@
   "scripts": {
     "build": "parcel build src/*.html src/background.ts --public-url ./ --experimental-scope-hoisting --no-content-hash",
     "watch": "parcel watch src/*.html src/background.ts --public-url ./ --no-hmr",
+    "lint": "eslint './src/**/*.{ts,tsx}'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
