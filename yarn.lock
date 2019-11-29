@@ -698,13 +698,13 @@
 
 "@fluent/bundle@^0.14.0":
   version "0.14.0"
-  resolved "https://registry.npm.taobao.org/@fluent/bundle/download/@fluent/bundle-0.14.0.tgz#b7ce7caf132966e4e40ed762f265c2b61f98eff2"
-  integrity sha1-t858rxMpZuTkDtdi8mXCth+Y7/I=
+  resolved "https://registry.yarnpkg.com/@fluent/bundle/-/bundle-0.14.0.tgz#b7ce7caf132966e4e40ed762f265c2b61f98eff2"
+  integrity sha512-ENcZYWq6Q5ut39n3hSQiL3seCTAajuPXIkpnPBeO4xcJFTUebNhKh5VpmwJngoS5lkRVYOzJGmupADzQy/ODYw==
 
 "@fluent/react@^0.10.0":
   version "0.10.0"
-  resolved "https://registry.npm.taobao.org/@fluent/react/download/@fluent/react-0.10.0.tgz#ce15d8fcf18882594569d07be3fc4d266d322c6a"
-  integrity sha1-zhXY/PGIgllFadB74/xNJm0yLGo=
+  resolved "https://registry.yarnpkg.com/@fluent/react/-/react-0.10.0.tgz#ce15d8fcf18882594569d07be3fc4d266d322c6a"
+  integrity sha512-SDuvLpSSbgX346UwjAqQtVZCI/NQBKiIonRX2rCvaBUL90jFYSBQTnS9c429p1cSqPvOiB1OH/Qiqq63SkPi4w==
   dependencies:
     "@fluent/sequence" "0.4.0"
     cached-iterable "^0.2.1"
@@ -2205,8 +2205,8 @@ deep-is@~0.1.3:
 
 deepmerge@^4.2.2:
   version "4.2.2"
-  resolved "https://registry.npm.taobao.org/deepmerge/download/deepmerge-4.2.2.tgz?cache=0&sync_timestamp=1572279556265&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fdeepmerge%2Fdownload%2Fdeepmerge-4.2.2.tgz#44d2ea3679b8f4d4ffba33f03d865fc1e7bf4955"
-  integrity sha1-RNLqNnm49NT/ujPwPYZfwee/SVU=
+  resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-4.2.2.tgz#44d2ea3679b8f4d4ffba33f03d865fc1e7bf4955"
+  integrity sha512-FJ3UgI4gIl+PHZm53knsuSFpE+nESMr7M4v9QcgB7S63Kj/6WqMiFQJpBBYz1Pt+66bZpP3Q7Lye0Oo9MPKEdg==
 
 defaults@^1.0.3:
   version "1.0.3"

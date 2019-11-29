@@ -16,6 +16,13 @@ const ConfigCtx = createContext<{
   setConfig: () => void 0,
 })
 
+const Input: React.FC<{title: string, type: string}> = ({ title, type }) => {
+  return <div className='input'>
+    <label>{title}</label>
+    <input type={type}/>
+  </div>
+}
+
 const CheckBox: React.FC<{
   value?: boolean,
   onChange: (v: boolean) => void,
@@ -85,6 +92,7 @@ const MiscSection: React.FC = () => {
     <Localized id='options-misc-title' attrs={{subTitle: true}}>
       <OptionSectionTitle />
     </Localized>
+    <Input title='后台查询间隔(单位 分钟)' type='number' />
     { checkboxs }
   </section>
 }
@@ -92,9 +100,7 @@ const MiscSection: React.FC = () => {
 const Options: React.FC = () => {
   const [ config, setConfigOri ] = useState<cfg.Config>({})
   const setConfig = useCallback((newConfig: cfg.Config) => {
-    const ret = deepmerge(config, newConfig)
-    console.log('set', config, newConfig, ret)
-    setConfigOri(newConfig)
+    setConfigOri(deepmerge(config, newConfig))
   }, [ config ])
   useEffect(() => {
     cfg.getConfig().then(setConfigOri)
