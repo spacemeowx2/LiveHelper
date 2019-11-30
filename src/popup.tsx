@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { render } from 'react-dom'
-import { CacheItem, Living, CacheHasContent, CacheError, PollErrorType } from './types'
+import { CacheItem, Living, CacheError, PollErrorType } from './types'
 import { useNow } from './utils'
 import { LocalizationProvider } from './langs'
 import { Localized } from '@fluent/react'
 import loading from '~/img/loading.gif'
 
-type Cache = Record<string, CacheItem<Living[]>>
+type Cache = Record<string, CacheItem>
 
 const Item: React.FC<{ room: Living }> = ({ room: {
   preview,
@@ -56,13 +56,18 @@ const ShowError: React.FC<{ err: CacheError }> = ({ err: {type, message} }) => {
 
 const Site: React.FC<{
   id: string
-  item: CacheItem<Living[]>
+  item: CacheItem
 }> = ({ id, item }) => {
+  const handleClick = useCallback(() => {
+    window.open(item.info.homepage)
+  }, [ item ])
   return <div className='site'>
-    <Localized id={`site-${id}`}><div className='site-header'>{id}</div></Localized>
+    <Localized id={`site-${id}`}><div className='site-header' onClick={handleClick}>{id}</div></Localized>
     {
-      CacheHasContent(item) ?
-        item.content.map((i, id) => <Item key={id} room={i} />) :
+      !item.error ?
+        item.living.length === 0 ?
+          <span className='info'><Localized id='no-room' /></span> :
+          item.living.map((i, id) => <Item key={id} room={i} />) :
         <ShowError err={item.error}/>
     }
   </div>

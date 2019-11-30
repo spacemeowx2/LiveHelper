@@ -26,24 +26,19 @@ export interface Living {
   // the room url
   url: string
 }
-export interface WebSite {
+export interface WebSiteInfo {
   readonly id: string
+  readonly homepage: string
+}
+export interface WebSite extends WebSiteInfo {
   getLiving: () => Promise<Living[]>
 }
-export type CacheItem<T> = {
+export type CacheItem = {
   lastUpdate: number
-  content: T
-} | {
-  lastUpdate: number
-  error: CacheError
+  info: WebSiteInfo
+  living: Living[]
+  error?: CacheError
 }
-export function CacheHasContent<T> (i: CacheItem<T>): i is {
-  lastUpdate: number
-  content: T
-} {
-  return Object.keys(i).indexOf('content') !== -1
-}
-
 const websites: WebSite[] = []
 export function registerWebSite (website: WebSite) {
   websites.push(website)

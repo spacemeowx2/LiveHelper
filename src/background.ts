@@ -4,7 +4,7 @@ import * as config from './config'
 
 const listening: Set<chrome.runtime.Port> = new Set()
 const EnablePolling = localStorage.getItem('EnablePolling')
-const cache = new LocalMap<CacheItem<Living[]>>('cache')
+const cache = new LocalMap<CacheItem>('cache')
 let polling = false
 let lastPoll = 0
 console.log('EnablePolling', EnablePolling)
@@ -46,7 +46,8 @@ async function poll() {
       const living = await w.getLiving()
       cache.set(w.id, {
         lastUpdate: now(),
-        content: living.sort(orderBy),
+        info: w,
+        living: living.sort(orderBy),
         error,
       })
     } catch (e) {
@@ -63,7 +64,8 @@ async function poll() {
       }
       cache.set(w.id, {
         lastUpdate: now(),
-        content: [],
+        info: w,
+        living: [],
         error,
       })
     }

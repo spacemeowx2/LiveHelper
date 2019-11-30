@@ -1,4 +1,4 @@
-import { registerWebSite, Living } from '../types'
+import { registerWebSite, Living, PollError, PollErrorType } from '../types'
 import { parseHTML, HTMLElement, mapFilter, now } from '~/utils'
 
 function getInfoFromItem (item: HTMLElement): Living | undefined {
@@ -29,12 +29,14 @@ function getInfoFromItem (item: HTMLElement): Living | undefined {
 registerWebSite({
   async getLiving () {
     const r = await fetch('https://www.douyu.com/room/follow')
+    if (r.url.includes('https://passport.douyu.com/member/login')) {
+      throw new PollError(PollErrorType.NotLogin)
+    }
     const dom = parseHTML(await r.text())
     const list = dom.querySelectorAll('.attention ul li') as HTMLElement[]
 
     return mapFilter(list, getInfoFromItem)
   },
-  get id () {
-    return 'douyu'
-  }
+  id: 'douyu',
+  homepage: 'https://www.douyu.com/'
 })

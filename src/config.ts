@@ -23,7 +23,7 @@ function getArea () {
   return area
 }
 
-async function get<T> (key: string): Promise<T> {
+async function get<T> (key: string): Promise<T | undefined> {
   return new Promise((res, rej) => {
     getArea().get(key, (items) => {
       res(items[key])
@@ -43,8 +43,8 @@ export function setConfig (config: Config) {
   return set(ConfigKey, config)
 }
 
-export function getConfig () {
-  return get<Config>(ConfigKey)
+export async function getConfig () {
+  return await get<Config>(ConfigKey) || {}
 }
 
 export function getEnabledWebsites () {

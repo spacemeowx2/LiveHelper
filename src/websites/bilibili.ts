@@ -1,4 +1,4 @@
-import { registerWebSite, Living } from '../types'
+import { registerWebSite, Living, PollError, PollErrorType } from '../types'
 import { mapFilter } from '~/utils'
 
 interface Room {
@@ -10,8 +10,9 @@ interface Room {
   link: string
 }
 interface Response {
+  code: number
   data: {
-    rooms: Room[]
+    rooms?: Room[]
   }
 }
 
@@ -35,12 +36,16 @@ function getInfoFromItem ({
 
 registerWebSite({
   async getLiving () {
-    const r = await fetch(`https://api.live.bilibili.com/feed/v1/feed/getList?page=1&page_size=100`)
+    const r = await fetch(`https://api.live.bilibili.com/relation/v1/Feed/getList?page=1&page_size=100`)
     const res: Response = await r.json()
+
+    // not login
+    if (res.code === 10004) {
+      throw new PollError(PollErrorType.NotLogin)
+    }
 
     return mapFilter(res.data.rooms, getInfoFromItem)
   },
-  get id () {
-    return 'bilibili'
-  }
+  id: 'bilibili',
+  homepage: 'https://live.bilibili.com/'
 })
