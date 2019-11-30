@@ -1,6 +1,7 @@
 export default `
 site-douyu = 斗鱼
 site-bilibili = 哔哩哔哩
+site-huya = 虎牙
 
 loading = 数据获取中...
 no-room = 你关注的主播还没有开播
