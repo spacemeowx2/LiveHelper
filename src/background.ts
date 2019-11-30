@@ -40,7 +40,9 @@ async function poll() {
   const startTime = +new Date()
   polling = true
   syncAll()
-  await Promise.all(config.getEnabledWebsites().map(async w => {
+  const enabledWebsites = await config.getEnabledWebsites()
+  cache.filterKeys(enabledWebsites.map(i => i.id))
+  await Promise.all(enabledWebsites.map(async w => {
     let error: CacheError | undefined
     try {
       const living = await w.getLiving()

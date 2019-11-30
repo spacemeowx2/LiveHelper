@@ -47,6 +47,7 @@ export async function getConfig () {
   return await get<Config>(ConfigKey) || {}
 }
 
-export function getEnabledWebsites () {
-  return Websites
+export async function getEnabledWebsites () {
+  const cfg = await getConfig()
+  return Websites.filter(i => cfg.enabled && cfg.enabled[i.id])
 }

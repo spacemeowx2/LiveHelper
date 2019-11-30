@@ -39,6 +39,13 @@ export class LocalMap<V> {
   get(k: string) {
     return this.mem[k]
   }
+  filterKeys(keys: string[]) {
+    for (const key of Object.keys(this.mem)) {
+      if (!keys.includes(key)) {
+        delete this.mem[key]
+      }
+    }
+  }
   private save() {
     if (this.id !== undefined) {
       clearTimeout(this.id)
