@@ -6,6 +6,7 @@ import { Localized } from '@fluent/react'
 import { getWebSites } from './types'
 import { deepmerge } from './utils'
 import * as cfg from './config'
+import { Loading } from './loading'
 
 const websites = getWebSites()
 const ConfigCtx = createContext<{
@@ -98,12 +99,17 @@ const MiscSection: React.FC = () => {
 }
 
 const Options: React.FC = () => {
+  const [ loading, setLoading ] = useState(false)
   const [ config, setConfigOri ] = useState<cfg.Config>({})
   const setConfig = useCallback((newConfig: cfg.Config) => {
     setConfigOri(deepmerge(config, newConfig))
   }, [ config ])
   useEffect(() => {
-    cfg.getConfig().then(setConfigOri)
+    (async () => {
+      setLoading(true)
+      setConfigOri(await cfg.getConfig())
+      setLoading(false)
+    })()
   }, [])
   useEffect(() => {
     cfg.setConfig(config)
@@ -115,8 +121,12 @@ const Options: React.FC = () => {
       setConfig,
     }), [ config, setConfig ])}>
       <h1><Localized id='options' /></h1>
-      <WebsiteSection />
-      <MiscSection />
+      {
+        loading ? <Loading /> : <>
+          <WebsiteSection />
+          <MiscSection />
+        </>
+      }
     </ConfigCtx.Provider>
   </LocalizationProvider>
 }

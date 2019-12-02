@@ -44,7 +44,14 @@ export function setConfig (config: Config) {
 }
 
 export async function getConfig () {
-  return await get<Config>(ConfigKey) || {}
+  return await get<Config>(ConfigKey) || {
+    preference: {
+      interval: 5,
+      notification: true,
+      preview: true,
+      ignoreFirstNotify: true
+    }
+  }
 }
 
 export async function getEnabledWebsites () {

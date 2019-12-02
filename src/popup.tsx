@@ -4,7 +4,7 @@ import { CacheItem, Living, CacheError, PollErrorType } from './types'
 import { useNow } from './utils'
 import { LocalizationProvider } from './langs'
 import { Localized } from '@fluent/react'
-import loading from '~/img/loading.gif'
+import { Loading } from './loading'
 
 type Cache = Record<string, CacheItem>
 
@@ -89,7 +89,7 @@ const Popup: React.FC = () => {
   return <LocalizationProvider>
     <div className='status' data-polling={polling}>
       <div className='polling'>
-        <img src={loading} alt='loading' />
+        <Loading />
         <span><Localized id='loading' /></span>
       </div>
     </div>
