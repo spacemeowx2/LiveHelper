@@ -92,3 +92,9 @@ export function parseViews(views: string): number | undefined {
   const [ , num, unit ] = re
   return parseFloat(num.replace(/,/g, '')) * map[unit]
 }
+
+export function getCookie (opt: chrome.cookies.Details) {
+  return new Promise<chrome.cookies.Cookie | null>((resolve, reject) => {
+      chrome.cookies.get(opt, resolve)
+  })
+}
