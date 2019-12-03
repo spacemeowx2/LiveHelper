@@ -5,6 +5,7 @@ site-huya = 虎牙
 site-zhanqi = 战旗
 site-huomao = 火猫
 site-longzhu = 龙珠
+site-necc = 网易CC
 
 loading = 数据获取中...
 no-room = 你关注的主播还没有开播
