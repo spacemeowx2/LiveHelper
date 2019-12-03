@@ -25,12 +25,12 @@ function getInfoFromItem ({
   link
 }: Room): Living | undefined {
   return {
-      title,
-      startAt: liveTime,
-      author: nickname,
-      online,
-      preview: keyframe,
-      url: link
+    title,
+    startAt: liveTime,
+    author: nickname,
+    online,
+    preview: keyframe,
+    url: link
   }
 }
 
@@ -42,6 +42,9 @@ registerWebSite({
     // not login
     if (res.code === 10004) {
       throw new PollError(PollErrorType.NotLogin)
+    }
+    if (res.data.rooms === undefined) {
+      throw new PollError(PollErrorType.Other)
     }
 
     return mapFilter(res.data.rooms, getInfoFromItem)

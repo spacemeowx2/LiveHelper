@@ -20,6 +20,7 @@ const Item: React.FC<{ room: Living }> = ({ room: {
   const onClick = useCallback(() => {
     window.open(url)
   }, [url])
+  const hasTime = startAt !== undefined && startAt !== null
   const sec = startAt ? now - startAt : undefined
   const min = sec ? Math.round(sec / 60) : undefined
   const hour = min ? Math.round(min / 60) : undefined
@@ -28,12 +29,12 @@ const Item: React.FC<{ room: Living }> = ({ room: {
     <div className='right'>
       <p className='title'>{title}</p>
       <div className='detail'>
-        <span className='time'><Localized
+        <span className='time'>{hasTime ? <Localized
           id='time-passed'
           $hour={hour}
           $min={min}
           $sec={sec}
-        /></span>
+        /> : <Localized id='time-started' />}</span>
         <span className='author'>{author}</span>
         <span className='online'><Localized
           id='online'

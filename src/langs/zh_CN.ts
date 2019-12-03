@@ -2,11 +2,13 @@ export default `
 site-douyu = 斗鱼
 site-bilibili = 哔哩哔哩
 site-huya = 虎牙
+site-zhanqi = 战旗
 
 loading = 数据获取中...
 no-room = 你关注的主播还没有开播
 error-not-login = 登录状态已失效, 请重新登录
 
+time-started = 已开播
 time-passed =
   { CMP(STRLEN($min), 3) ->
       [GT] 已播{STR($hour)}小时
