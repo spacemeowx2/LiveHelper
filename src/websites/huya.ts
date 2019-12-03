@@ -4,7 +4,6 @@ import { mapFilter } from '~/utils'
 interface Room {
   isLive: boolean
   profileRoom: number
-  // has html entites
   intro: string
   startTime: number
   nick: string
@@ -30,7 +29,6 @@ function getInfoFromItem ({
   screenshot
 }: Room): Living | undefined {
   return {
-    // TODO: decode
     title: intro,
     startAt: startTime,
     author: nick,
