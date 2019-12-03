@@ -79,6 +79,12 @@ body {
   height: 68px;
   transition: all .3s ease;
 
+  .title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   .detail {
     display: flex;
     margin-top: 15px;
@@ -106,11 +112,6 @@ body {
       padding-left: 18px;
       background: left / 18px url(../img/online.svg) no-repeat;
       width: 60px
-    }
-    .title {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
     }
   }
 }

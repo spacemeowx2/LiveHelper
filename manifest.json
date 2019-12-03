@@ -51,7 +51,8 @@
     "*://*.dwstatic.com/*",
     "*://*.jtvnw.net/*",
     "*://*.nimg.jp/*",
-    "*://*.myqcloud.com/*"
+    "*://*.myqcloud.com/*",
+    "*://*.qpic.cn/*"
   ],
 
   "web_accessible_resources": [
