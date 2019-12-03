@@ -69,3 +69,26 @@ export function parseHTML(html: string) {
 export function mapFilter<T, U>(ary: T[], f: (t: T) => U | undefined | null) {
   return ary.map(f).filter(Boolean) as U[]
 }
+
+/**
+ * Parse views to number
+ * @param views views could be:
+ *   1.01万
+ *   39.78万
+ *   8,346
+ *   16
+ */
+export function parseViews(views: string): number | undefined {
+  const map: Record<string, number> = {
+    '': 1,
+    '万': 10000,
+    '千': 1000,
+    '百': 100,
+  }
+  const re = /^([\d.,]+)([万千百]?)$/.exec(views)
+  if (re === null) {
+    return undefined
+  }
+  const [ , num, unit ] = re
+  return parseFloat(num.replace(/,/g, '')) * map[unit]
+}
