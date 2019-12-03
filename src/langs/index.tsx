@@ -2,6 +2,7 @@ import React from 'react'
 import { FluentBundle, FluentResource, FluentNumber } from '@fluent/bundle'
 import { LocalizationProvider as LP } from '@fluent/react'
 import zh_CN from './zh_CN'
+import { Maybe, maybeHas } from '~/types'
 
 interface FluentValue<T> {
   value: T
@@ -32,6 +33,9 @@ const functions = {
   },
   STR ([n]: FluentValue<number>[]) {
     return n.value.toString()
+  },
+  MAYBE_HAS ([n]: FluentValue<Maybe<any>>[]) {
+    return maybeHas(n.value) ? 'has' : 'none'
   }
 }
 

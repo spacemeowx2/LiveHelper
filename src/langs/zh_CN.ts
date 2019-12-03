@@ -4,6 +4,7 @@ site-bilibili = 哔哩哔哩
 site-huya = 虎牙
 site-zhanqi = 战旗
 site-huomao = 火猫
+site-longzhu = 龙珠
 
 loading = 数据获取中...
 no-room = 你关注的主播还没有开播
@@ -18,6 +19,7 @@ time-passed =
         *[other] 已播{STR($min)}分钟
       }
   }
+online-placeholder = 观众
 online =
   { CMP($online, 10000) ->
       [LT] {STR($online)}

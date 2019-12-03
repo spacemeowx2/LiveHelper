@@ -12,6 +12,9 @@ export interface CacheError {
   message?: string
 }
 export type Maybe<T> = T | undefined | null
+export function maybeHas<T>(t: Maybe<T>): t is T {
+  return t !== undefined && t !== null
+}
 export interface Living {
   // room title
   title: string

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { render } from 'react-dom'
-import { CacheItem, Living, CacheError, PollErrorType } from './types'
+import { CacheItem, Living, CacheError, PollErrorType, maybeHas } from './types'
 import { useNow } from './utils'
 import { LocalizationProvider } from './langs'
 import { Localized } from '@fluent/react'
@@ -20,24 +20,29 @@ const Item: React.FC<{ room: Living }> = ({ room: {
   const onClick = useCallback(() => {
     window.open(url)
   }, [url])
-  const hasTime = startAt !== undefined && startAt !== null
-  const sec = startAt ? now - startAt : undefined
-  const min = sec ? Math.round(sec / 60) : undefined
-  const hour = min ? Math.round(min / 60) : undefined
+  const hasOnline = maybeHas(online)
+  let timeView = <Localized id='time-started' />
+  if (maybeHas(startAt)) {
+    const sec = now - startAt
+    const min = Math.round(sec / 60)
+    const hour = Math.round(min / 60)
+    timeView = <Localized
+      id='time-passed'
+      $hour={hour}
+      $min={min}
+      $sec={sec}
+    />
+  }
+
   return <div className='room' onClick={onClick}>
     <img className='preview' alt='preview' src={preview} />
     <div className='right'>
       <p className='title'>{title}</p>
       <div className='detail'>
-        <span className='time'>{hasTime ? <Localized
-          id='time-passed'
-          $hour={hour}
-          $min={min}
-          $sec={sec}
-        /> : <Localized id='time-started' />}</span>
+        <span className='time'>{timeView}</span>
         <span className='author'>{author}</span>
         <span className='online'><Localized
-          id='online'
+          id={hasOnline ? 'online' : 'online-placeholder'}
           $online={online}
         /></span>
       </div>
