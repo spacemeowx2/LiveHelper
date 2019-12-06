@@ -14,6 +14,7 @@ interface Response {
   data: {
     rooms?: Room[]
   }
+  need_login?: number
 }
 
 function getInfoFromItem ({
@@ -40,7 +41,7 @@ registerWebSite({
     const res: Response = await r.json()
 
     // not login
-    if (res.code === 10004) {
+    if (res.code === 10004 || res.code === 401 || res.need_login === 1) {
       throw new PollError(PollErrorType.NotLogin)
     }
     if (res.data.rooms === undefined) {
