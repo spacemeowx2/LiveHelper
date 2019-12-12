@@ -32,7 +32,7 @@ const CheckBox: React.FC<{
     <label>
       <input type='checkbox' checked={value} onChange={useCallback((e: ChangeEvent<HTMLInputElement>) => {
         onChange(e.currentTarget.checked)
-      }, [ onChange ])} value='o1n' />
+      }, [ onChange ])} />
       <span>{children}</span>
     </label>
   </div>

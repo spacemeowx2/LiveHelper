@@ -8,6 +8,7 @@ site-longzhu = 龙珠
 site-necc = 网易CC
 site-egameqq = 企鹅电竞
 site-twitch = Twitch
+site-openrec = OPENREC
 
 loading = 数据获取中...
 no-room = 你关注的主播还没有开播
