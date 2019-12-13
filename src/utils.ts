@@ -1,6 +1,7 @@
 import { parse, HTMLElement } from 'node-html-parser'
 import { useState, useEffect } from 'react'
 import deepmerge from 'deepmerge'
+import { Maybe } from './types'
 
 export { HTMLElement } from 'node-html-parser'
 export { deepmerge }
@@ -66,8 +67,10 @@ export function parseHTML(html: string) {
   }))
 }
 
-export function mapFilter<T, U>(ary: T[], f: (t: T) => U | undefined | null) {
-  return ary.map(f).filter(Boolean) as U[]
+type MaybePromise<T> = T | Promise<T>
+export async function mapFilter<T, U>(ary: T[], f: (t: T) => MaybePromise<Maybe<U>>) {
+  const promises = await Promise.all(ary.map(f))
+  return promises.filter(Boolean) as U[]
 }
 
 /**
@@ -97,4 +100,11 @@ export function getCookie (opt: chrome.cookies.Details) {
   return new Promise<chrome.cookies.Cookie | null>((resolve, reject) => {
       chrome.cookies.get(opt, resolve)
   })
+}
+
+export function trimLeft (s: string, left: string) {
+  if (s.startsWith(left)) {
+    return s.slice(left.length)
+  }
+  return s
 }

@@ -1,60 +1,66 @@
 import { registerWebSite, Living, PollError, PollErrorType } from '../types'
-import { parseHTML, HTMLElement, mapFilter } from '~/utils'
+import { mapFilter, getCookie } from '~/utils'
 
-function getInfoFromItem (item: HTMLElement): Living | undefined {
-  const countElement = item.querySelector('.c-content__list__popularchannel__link__desc__count')
-  const count = parseInt(countElement?.text)
-  if (isNaN(count)) {
-    return
+interface Room {
+  // title
+  meta_data: string
+  user_name: string
+  live_views: string
+  thumbnail_url: string
+  identify_id: string
+  movie_live: {
+    onair_status: '1' | '2'
+    onair_start_dt: string
   }
+}
 
-  const previewStyle = item.querySelector('.c-content__list__popularchannel__link__box p')?.attributes['style'];
-  const previewRE = /background-image:url\((.*?)\)/.exec(previewStyle)
-  if (!previewRE) {
-    return
+interface Response {
+  data: {
+    items: Room[] | null
   }
-  const preview = previewRE[1]
+  status: number
+}
 
+function getInfoFromItem ({
+  meta_data, user_name, live_views, thumbnail_url, identify_id,
+  movie_live: {
+    onair_status,
+    onair_start_dt
+  }
+}: Room): Living | undefined {
+  if (onair_status !== '1') return
   return {
-      title: item.querySelector('.c-content__list__popularchannel__link__desc__name')?.text?.trim(),
-      startAt: null,
-      author: item.querySelector('.c-content__list__popularchannel__link__desc__mail')?.text?.trim(),
-      online: count,
-      preview,
-      url: item.attributes.href
+    title: meta_data,
+    startAt: +new Date(`${onair_start_dt} GMT+0900`) / 1000,
+    author: user_name,
+    online: parseInt(live_views),
+    preview: thumbnail_url,
+    url: `https://www.openrec.tv/live/${identify_id}`
   }
-}
-
-function fetchEn(url: string) {
-  return fetch(url, {
-    mode: 'cors',
-    headers: {
-      'accept-language': 'en;q=0.8,en-US;q=0.6'
-    }
-  })
-}
-
-async function getFollowUrl() {
-  const r = await fetchEn('https://www.openrec.tv/profile')
-  if (r.url === 'https://www.openrec.tv/') {
-    throw new PollError(PollErrorType.NotLogin)
-  }
-  const dom = parseHTML(await r.text())
-  const homepage = dom.querySelector('.js-menu__mypage a').attributes.href
-  if (!homepage) {
-    throw new PollError(PollErrorType.NotLogin)
-  }
-
-  return `${homepage}/follow`
 }
 
 registerWebSite({
   async getLiving () {
-    const r = await fetchEn(await getFollowUrl())
-    const dom = parseHTML(await r.text())
-    const list = dom.querySelectorAll('.js-scroll__userFollowList a') as HTMLElement[]
+    const Uuid = (await getCookie({url: 'https://www.openrec.tv/', name: 'uuid'}))!.value
+    const Random = (await getCookie({url: 'https://www.openrec.tv/', name: 'random'}))!.value
+    const Token = (await getCookie({url: 'https://www.openrec.tv/', name: 'token'}))!.value
+    const url = ['https:', '', 'www.openrec.tv', 'viewapp', 'api', 'v3', 'user', 'myfeed?page_number=1'].join('/')
+    const res: Response = await (await fetch(url, {
+      headers: {
+        'x-openrec-agent': 'APP',
+        Uuid,
+        Random,
+        Token,
+        'App-Ver': '6.10.17',
+        'Device': 'AndroidPhone',
+        'X-lang': 'en'
+      }
+    })).json()
+    if (res.data.items === null) {
+      throw new PollError(PollErrorType.NotLogin)
+    }
 
-    return mapFilter(list, getInfoFromItem)
+    return mapFilter(res.data.items, getInfoFromItem)
   },
   id: 'openrec',
   homepage: 'https://www.openrec.tv/'
