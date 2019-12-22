@@ -41,9 +41,12 @@ function getInfoFromItem ({
 
 registerWebSite({
   async getLiving () {
-    const Uuid = (await getCookie({url: 'https://www.openrec.tv/', name: 'uuid'}))!.value
-    const Random = (await getCookie({url: 'https://www.openrec.tv/', name: 'random'}))!.value
-    const Token = (await getCookie({url: 'https://www.openrec.tv/', name: 'token'}))!.value
+    const Uuid = (await getCookie({url: 'https://www.openrec.tv/', name: 'uuid'}))?.value
+    const Random = (await getCookie({url: 'https://www.openrec.tv/', name: 'random'}))?.value
+    const Token = (await getCookie({url: 'https://www.openrec.tv/', name: 'token'}))?.value
+    if (!Uuid || !Random || !Token) {
+      throw new PollError(PollErrorType.NotLogin)
+    }
     const url = ['https:', '', 'www.openrec.tv', 'viewapp', 'api', 'v3', 'user', 'myfeed?page_number=1'].join('/')
     const res: Response = await (await fetch(url, {
       headers: {
