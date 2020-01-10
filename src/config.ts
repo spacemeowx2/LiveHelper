@@ -1,10 +1,11 @@
 import './websites'
-import { getWebSites } from './types'
+import { getWebSites, Living } from './types'
 import { parseJSON } from './utils'
 
 const Websites = getWebSites()
 const UseSyncKey = 'useSync'
 const ConfigKey = 'config'
+const LastPollKey = 'last_poll'
 
 export interface Config {
   enabled?: Record<string, boolean>
@@ -57,4 +58,12 @@ export async function getConfig () {
 export async function getEnabledWebsites () {
   const cfg = await getConfig()
   return Websites.filter(i => cfg.enabled && cfg.enabled[i.id])
+}
+
+export function setLastPoll(value: Record<string, Living>) {
+  localStorage.setItem(LastPollKey, JSON.stringify(value))
+}
+
+export function getLastPoll(): Record<string, Living> {
+  return parseJSON(localStorage.getItem(LastPollKey)) || {}
 }
