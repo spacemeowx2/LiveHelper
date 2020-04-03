@@ -1,5 +1,5 @@
 body {
-  min-width: 400px;
+  min-width: 420px;
   max-height: 600px;
   overflow-y: auto;
   font-size: 14px;
@@ -27,13 +27,23 @@ body {
     position: sticky;
     top: 0;
     padding: 5px 5px;
-    cursor: pointer;
-    border: 1px solid #E5E5E5;
     border-left: 0;
     border-right: 0;
     margin-bottom: 2px;
-  }
 
+    .site-name {
+      cursor: pointer;
+      max-width: fit-content;
+    }
+    .site-name:hover {
+      text-decoration-line: underline;
+    }
+    .site-icon {
+      padding: 0px 5px 0px 5px;
+      width: 19px;
+      vertical-align: text-bottom;
+    }
+  }
   .error , .info {
     margin: 5px 0;
     display: block;
@@ -46,18 +56,14 @@ body {
   cursor: pointer;
   overflow: hidden;
   position: relative;
-}
-.room::after {
-  display: block;
-  content: " ";
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 1px;
-  background-color: #E5E5E5;
+  padding: 5px 12px 5px 12px;
 }
 .room:last-child::after {
   display: none;
+}
+.room:hover {
+  cursor: pointer;
+  background: #EEE;
 }
 .room .preview {
   box-sizing: border-box;
@@ -65,29 +71,28 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   float: left;
-  width: 120px;
-  height: 67px;
-  border-radius: 2px;
+  width: 100px;
+  height: 50px;
   transition: all .3s ease;
 }
 .room .right {
   box-sizing: border-box;
   float: left;
-  padding-top: 8px;
-  padding-left: 5px;
-  width: 280px;
-  height: 68px;
+  padding: 2px 0px 0px 12px;
+  width: 290px;
   transition: all .3s ease;
 
   .title {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-size: 12px;
+    color: #555;
   }
 
   .detail {
     display: flex;
-    margin-top: 15px;
+    margin-top: 10px;
 
     span {
       flex: auto;
@@ -104,12 +109,12 @@ body {
       background: left / 18px url(../img/clock.svg) no-repeat;
     }
     .author {
-      padding: 0 2px 0 18px;
+      padding: 0 2px 0 20px;
       background: left / 18px url(../img/author.svg) no-repeat;
       width: 110px
     }
     .online {
-      padding-left: 18px;
+      padding: 0 2px 0 20px;
       background: left / 18px url(../img/online.svg) no-repeat;
       width: 60px
     }
@@ -134,4 +139,8 @@ body {
   &[data-polling] .polling {
     transform: translateY(0);
   }
+}
+
+::-webkit-scrollbar {
+  width: 0px;
 }
