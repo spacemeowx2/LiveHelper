@@ -124,7 +124,7 @@ const Options: React.FC = () => {
       {
         loading ? <Loading /> : <>
           <WebsiteSection />
-          <MiscSection />
+          { false && <MiscSection /> }
         </>
       }
     </ConfigCtx.Provider>
