@@ -68,9 +68,11 @@ const Site: React.FC<{
     window.open(item.info.homepage)
   }, [ item ])
   return <div className='site'>
-    <div className="site-header" onClick={handleClick}>
+    <div className="site-header">
+      <div className="site-name" onClick={handleClick}>
         <img className="site-icon" alt={id} src={`/src/img/${id}.svg`} />
         <Localized id={`site-${id}`}>{id}</Localized>
+      </div>
     </div>
     {
       !item.error ?

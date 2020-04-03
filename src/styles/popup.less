@@ -27,18 +27,23 @@ body {
     position: sticky;
     top: 0;
     padding: 5px 5px;
-    cursor: pointer;
     border-left: 0;
     border-right: 0;
     margin-bottom: 2px;
-  }
 
-  .site-icon {
-    padding: 0px 5px 0px 5px;
-    width: 18px;
-    vertical-align: text-bottom;
+    .site-name {
+      cursor: pointer;
+      max-width: fit-content;
+    }
+    .site-name:hover {
+      text-decoration-line: underline;
+    }
+    .site-icon {
+      padding: 0px 5px 0px 5px;
+      width: 19px;
+      vertical-align: text-bottom;
+    }
   }
-
   .error , .info {
     margin: 5px 0;
     display: block;
