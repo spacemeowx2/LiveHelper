@@ -95,5 +95,5 @@ export async function getInterval() {
 
 export async function getSendNotification() {
   const cfg = await getConfig()
-  return cfg.preference?.notification || true
+  return cfg.preference?.notification ?? true
 }
