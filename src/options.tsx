@@ -100,7 +100,7 @@ const WebsiteSection: React.FC = () => {
   </section>
 }
 
-const MiscCheckBoxKeys: (keyof cfg.Preference)[] = ['notification', 'preview', 'ignoreFirstNotify']
+const MiscCheckBoxKeys: (keyof cfg.Preference)[] = ['notification'] // , 'preview', 'ignoreFirstNotify'
 const MiscSection: React.FC = () => {
   // eslint-disable-next-line
   const checkboxs = MiscCheckBoxKeys.map(key => <CheckBox key={key} {...useMiscCheckBox(key)}><Localized id={`misc-${key}`} /></CheckBox>)
@@ -140,7 +140,7 @@ const Options: React.FC = () => {
       {
         loading ? <Loading /> : <>
           <WebsiteSection />
-          { false && <MiscSection /> }
+          <MiscSection />
         </>
       }
     </ConfigCtx.Provider>

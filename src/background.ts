@@ -47,15 +47,17 @@ function dictByUrl(all: Living[]) {
   return out
 }
 
-function beginLive(item: Living) {
+async function beginLive(item: Living) {
   console.log('beginLive', item)
-  chrome.notifications.create(item.url, {
-    type: 'basic',
-    iconUrl: item.preview,
-    title: item.title,
-    message: '正在直播',
-    contextMessage: item.author
-  }, function () { return false })
+  if (await config.getSendNotification()) {
+    chrome.notifications.create(item.url, {
+      type: 'basic',
+      iconUrl: item.preview,
+      title: item.title,
+      message: '正在直播',
+      contextMessage: item.author
+    }, function () { return false })
+  }
 }
 
 function endLive(item: Living) {
