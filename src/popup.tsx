@@ -70,7 +70,7 @@ const Site: React.FC<{
   return <div className='site'>
     <div className="site-header">
       <div className="site-name" onClick={handleClick}>
-        <img className="site-icon" alt={id} src={`/src/img/${id}.svg`} />
+        <img className="site-icon" alt={id} src={`/icon/websites/${id}.svg`} />
         <Localized id={`site-${id}`}>{id}</Localized>
       </div>
     </div>
