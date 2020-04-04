@@ -4,7 +4,7 @@
   "description": "帮你整合多个直播网站的关注列表",
   "main": "build/index.js",
   "scripts": {
-    "build": "parcel build src/*.html src/background.ts --public-url ./ --no-content-hash",
+    "build": "node build/build.js",
     "watch": "parcel watch src/*.html src/background.ts --public-url ./ --no-hmr",
     "lint": "eslint './src/**/*.{ts,tsx}'",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -31,6 +31,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.9.0",
     "@typescript-eslint/parser": "^2.9.0",
+    "archiver": "^3.1.1",
     "eslint": "^6.7.1",
     "eslint-config-react-app": "^5.0.2",
     "eslint-plugin-flowtype": "^4.5.2",
