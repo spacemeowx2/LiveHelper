@@ -13,6 +13,7 @@ site-openrec = OPENREC
 loading = 数据获取中...
 no-room = 你关注的主播还没有开播
 error-not-login = 登录状态已失效, 请重新登录
+goto-option = 请前往<GoOption>选项</GoOption>开启要关注的网站
 
 time-started = 已开播
 time-passed =

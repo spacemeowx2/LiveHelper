@@ -84,6 +84,11 @@ const Site: React.FC<{
   </div>
 }
 
+const GoOption: React.FC = ({ children }) => <a href='options.html'>{children}</a>
+const Widget: Record<string, React.ReactElement> = {
+  GoOption: <GoOption></GoOption>
+}
+
 const Popup: React.FC = () => {
   const [ list, setList ] = useState<Cache>({})
   const [ polling, setPolling ] = useState(false)
@@ -105,7 +110,11 @@ const Popup: React.FC = () => {
       </div>
     </div>
     <div>
-      { keys.map(k => <Site key={k} id={k} item={list[k]} />) }
+      { keys.length > 0 ?
+        keys.map(k => <Site key={k} id={k} item={list[k]} />) :
+        <div className='go-option-tip'>
+          <Localized {...Widget} id='goto-option'><></></Localized>
+        </div> }
     </div>
   </LocalizationProvider>
 }
