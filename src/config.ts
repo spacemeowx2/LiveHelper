@@ -3,9 +3,11 @@ import { getWebSites, Living } from './types'
 import { parseJSON } from './utils'
 
 const Websites = getWebSites()
+const DirtyKey = 'dirty'
 const UseSyncKey = 'useSync'
 const ConfigKey = 'config'
 const LastPollKey = 'last_poll'
+const PollLastPollKey = 'poll_last_poll'
 
 export interface Config {
   enabled?: Record<string, boolean>
@@ -66,4 +68,27 @@ export function setLastPoll(value: Record<string, Living>) {
 
 export function getLastPoll(): Record<string, Living> {
   return parseJSON(localStorage.getItem(LastPollKey)) || {}
+}
+
+export function setPollLastPoll(value: number) {
+  localStorage.setItem(PollLastPollKey, JSON.stringify(value))
+}
+
+export function getPollLastPoll(): number {
+  return parseJSON(localStorage.getItem(PollLastPollKey)) || 0
+}
+
+export function setDirty() {
+  localStorage.setItem(DirtyKey, 'true')
+}
+
+export function getDirty() {
+  const ret = localStorage.getItem(DirtyKey) === 'true'
+  localStorage.removeItem(DirtyKey)
+  return ret
+}
+
+export async function getInterval() {
+  const cfg = await getConfig()
+  return cfg.preference?.interval || 5
 }

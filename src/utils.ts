@@ -15,6 +15,9 @@ export function useNow() {
   return time
 }
 
+/**
+ * return current time in seconds
+ */
 export function now() {
   return Math.floor(+new Date() / 1000)
 }

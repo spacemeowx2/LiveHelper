@@ -7,14 +7,10 @@ enum From {
   User,
 }
 const listening: Set<chrome.runtime.Port> = new Set()
-const EnablePolling = localStorage.getItem('EnablePolling')
 const cache = new LocalMap<CacheItem>('cache')
 let polling = false
-let lastPoll = 0
-console.log('EnablePolling', EnablePolling)
 
 chrome.runtime.onConnect.addListener(async (port) => {
-  console.log('on connect')
   if (port.name === 'channel') {
     sync(port)
     listening.add(port)
@@ -24,19 +20,20 @@ chrome.runtime.onConnect.addListener(async (port) => {
 })
 
 chrome.notifications.onClicked.addListener((id) => {
-  console.log('click', id)
   window.open(id)
 })
 
-if (EnablePolling) {
-  chrome.alarms.create({
-    delayInMinutes: 1,
-    periodInMinutes: 5,
-  })
-  chrome.alarms.onAlarm.addListener(() => {
-    poll(From.Timer)
-  })
-}
+chrome.alarms.create({
+  delayInMinutes: 1,
+  periodInMinutes: 1,
+})
+chrome.alarms.onAlarm.addListener(async () => {
+  const interval = await config.getInterval() * 60
+  if (now() - config.getPollLastPoll() < interval) {
+    return
+  }
+  poll(From.Timer)
+})
 
 function orderBy(b: Living, a: Living) {
   return (a.online || 0) - (b.online || 0)
@@ -67,7 +64,7 @@ function endLive(item: Living) {
 }
 
 async function poll(from: From) {
-  if (now() - lastPoll <= 10) {
+  if ((now() - config.getPollLastPoll() <= 10) && (!config.getDirty())) {
     return
   }
   const startTime = +new Date()
@@ -127,8 +124,7 @@ async function poll(from: From) {
 
     polling = false
     console.log('poll done', +new Date() - startTime)
-    // eslint-disable-next-line
-    lastPoll = now()
+    config.setPollLastPoll(now())
     syncAll()
   }
 }

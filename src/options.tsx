@@ -17,10 +17,12 @@ const ConfigCtx = createContext<{
   setConfig: () => void 0,
 })
 
-const Input: React.FC<{title: string, type: string}> = ({ title, type }) => {
+const Input: React.FC<{title: string, type: string, onChange?: (s: string) => void, value?: string}> = ({ title, type, onChange, value }) => {
   return <div className='input'>
     <label>{title}</label>
-    <input type={type}/>
+    <input type={type} value={value} onChange={useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+      onChange && onChange(e.currentTarget.value)
+    }, [onChange])}/>
   </div>
 }
 
@@ -65,6 +67,19 @@ const useMiscCheckBox = (key: keyof cfg.Preference) => {
   } as const
 }
 
+const PollInterval: React.FC = () => {
+  const { config, setConfig } = useContext(ConfigCtx)
+  const onChange = useCallback((value: string) => {
+    setConfig({
+      preference: {
+        interval: parseInt(value)
+      }
+    })
+  }, [ setConfig ])
+
+  return <Input title='后台查询间隔(单位 分钟)' type='number' value={String(config.preference?.interval || 5)} onChange={onChange} />
+}
+
 const OptionSectionTitle: React.FC<{
   subTitle?: string
 }> = ({subTitle, children }) => {
@@ -93,7 +108,7 @@ const MiscSection: React.FC = () => {
     <Localized id='options-misc-title' attrs={{subTitle: true}}>
       <OptionSectionTitle />
     </Localized>
-    <Input title='后台查询间隔(单位 分钟)' type='number' />
+    <PollInterval />
     { checkboxs }
   </section>
 }
@@ -113,6 +128,7 @@ const Options: React.FC = () => {
   }, [])
   useEffect(() => {
     cfg.setConfig(config)
+    cfg.setDirty()
   }, [ config ])
 
   return <LocalizationProvider>

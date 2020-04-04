@@ -16,7 +16,7 @@ function getInfoFromItem (item: HTMLElement): Living | undefined {
     author: name.text,
     online: parseViews(popular.text),
     preview: `https:${img.attributes.src}`,
-    url: `https://egame.qq.com/${a.attributes.href}`
+    url: `https://egame.qq.com${a.attributes.href}`
   }
 }
 
