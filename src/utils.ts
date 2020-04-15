@@ -60,7 +60,7 @@ export class LocalMap<V> {
     }, 0)
   }
   toJSON () {
-    return this.mem
+    return JSON.parse(JSON.stringify(this.mem))
   }
 }
 
