@@ -12,7 +12,8 @@ interface Room {
 interface Response {
   code: number
   data: {
-    rooms?: Room[]
+    rooms: Room[]
+    count: number
   }
   need_login?: number
 }
@@ -37,8 +38,14 @@ function getInfoFromItem ({
 
 registerWebSite({
   async getLiving () {
-    const r = await fetch(`https://api.live.bilibili.com/relation/v1/Feed/getList?page=1&page_size=100`)
+    const r = await fetch(`https://api.live.bilibili.com/relation/v1/Feed/getList`)
     const res: Response = await r.json()
+    const count: number = res.data.count;
+
+    for (let page = 2; page <= (count / 10) + 1; page++) {
+      const list: Response = await (await fetch(`https://api.live.bilibili.com/relation/v1/Feed/getList?page=` + page)).json()
+      res.data.rooms = res.data.rooms.concat(list.data.rooms)
+    }
 
     // not login
     if (res.code === 10004 || res.code === 401 || res.need_login === 1) {
