@@ -109,6 +109,7 @@ async function poll(from: From) {
           error,
         })
       }
+      syncAll()
     }))
     const living = dictByUrl(all)
     const lastLiving = config.getLastPoll()
