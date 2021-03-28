@@ -37,11 +37,11 @@ function getInfoFromItem ({
 
 registerWebSite({
   async getLiving () {
-    const r = await fetch(`https://api.live.bilibili.com/relation/v1/Feed/getList?page=1&page_size=100`)
+    const r = await fetch(`https://api.live.bilibili.com/xlive/web-ucenter/v1/xfetter/GetWebList?page=1&page_size=10`)
     const res: Response = await r.json()
 
     // not login
-    if (res.code === 10004 || res.code === 401 || res.need_login === 1) {
+    if (res.code === -101) {
       throw new PollError(PollErrorType.NotLogin)
     }
     if (res.data.rooms === undefined) {
