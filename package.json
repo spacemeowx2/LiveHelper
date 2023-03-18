@@ -27,6 +27,8 @@
     "typescript": "^4.9.5"
   },
   "devDependencies": {
+    "@parcel/core": "^2.8.3",
+    "@parcel/plugin": "^2.8.3",
     "archiver": "^5.3.1",
     "eslint": "^8.36.0",
     "eslint-config-react-app": "^7.0.1",
