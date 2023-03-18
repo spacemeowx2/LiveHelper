@@ -1,4 +1,4 @@
-export default `
+const TRANSLATION = `
 site-douyu = 斗鱼
 site-bilibili = 哔哩哔哩
 site-huya = 虎牙
@@ -38,4 +38,5 @@ options-misc-title = 杂项
 misc-notification = 有新的主播开始直播时提醒我
 misc-preview = 显示缩略图
 misc-ignoreFirstNotify = 启动时不提醒
-`
+`;
+export default TRANSLATION;

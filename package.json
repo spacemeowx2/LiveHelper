@@ -5,7 +5,7 @@
   "scripts": {
     "build": "node build/build.js",
     "watch": "parcel watch src/*.html src/background.ts --public-url ./ --no-hmr",
-    "lint": "eslint './src/**/*.{ts,tsx}'",
+    "lint": "eslint --max-warnings=0 src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -47,6 +47,9 @@
   "lint-staged": {
     "*.ts": "eslint",
     "*.tsx": "eslint"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
   },
   "pnpm": {
     "packageExtensions": {
