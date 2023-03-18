@@ -1,5 +1,5 @@
 import { registerWebSite, Living, PollError, PollErrorType } from '../types'
-import { mapFilter, getCookie } from '~/utils'
+import { mapFilter, getCookie } from 'utils'
 
 const ClientId = 'kimne78kx3ncx6brgo4mv6wki5h1ko'
 const GqlRequest = `[{"operationName":"FollowedIndex_CurrentUser","variables":{"limit":30},"extensions":{"persistedQuery":{"version":1,"sha256Hash":"181e1c51a951f4cc0dc54e13d3c4dbde6d9bf4ecbd4724d753ddb1794ab055d6"}}}]`
@@ -25,7 +25,7 @@ interface Response {
   }
 }
 
-function getInfoFromItem ({
+function getInfoFromItem({
   displayName,
   login,
   stream: {
@@ -45,8 +45,8 @@ function getInfoFromItem ({
 }
 
 registerWebSite({
-  async getLiving () {
-    const authToken = await getCookie({url: 'https://www.twitch.tv', name: 'auth-token'})
+  async getLiving() {
+    const authToken = await getCookie({ url: 'https://www.twitch.tv', name: 'auth-token' })
     if (authToken === null) {
       throw new PollError(PollErrorType.NotLogin)
     }
@@ -58,7 +58,7 @@ registerWebSite({
       },
       body: GqlRequest,
     })
-    const [ res ]: Response[] = await r.json()
+    const [res]: Response[] = await r.json()
     if (res.data.currentUser === null) {
       throw new PollError(PollErrorType.NotLogin)
     }

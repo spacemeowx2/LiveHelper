@@ -1,5 +1,5 @@
 import { registerWebSite, Living, PollError, PollErrorType } from '../types'
-import { mapFilter, getCookie } from '~/utils'
+import { mapFilter, getCookie } from 'utils'
 
 interface Room {
   // title
@@ -21,7 +21,7 @@ interface Response {
   status: number
 }
 
-function getInfoFromItem ({
+function getInfoFromItem({
   meta_data, user_name, live_views, thumbnail_url, identify_id,
   movie_live: {
     onair_status,
@@ -40,10 +40,10 @@ function getInfoFromItem ({
 }
 
 registerWebSite({
-  async getLiving () {
-    const Uuid = (await getCookie({url: 'https://www.openrec.tv/', name: 'uuid'}))?.value
-    const Random = (await getCookie({url: 'https://www.openrec.tv/', name: 'random'}))?.value
-    const Token = (await getCookie({url: 'https://www.openrec.tv/', name: 'token'}))?.value
+  async getLiving() {
+    const Uuid = (await getCookie({ url: 'https://www.openrec.tv/', name: 'uuid' }))?.value
+    const Random = (await getCookie({ url: 'https://www.openrec.tv/', name: 'random' }))?.value
+    const Token = (await getCookie({ url: 'https://www.openrec.tv/', name: 'token' }))?.value
     if (!Uuid || !Random || !Token) {
       throw new PollError(PollErrorType.NotLogin)
     }

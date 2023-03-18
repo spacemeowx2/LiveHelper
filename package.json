@@ -2,7 +2,6 @@
   "name": "livehelper",
   "version": "2.0.5",
   "description": "帮你整合多个直播网站的关注列表",
-  "main": "build/index.js",
   "scripts": {
     "build": "node build/build.js",
     "watch": "parcel watch src/*.html src/background.ts --public-url ./ --no-hmr",
@@ -16,37 +15,26 @@
   "author": "space",
   "license": "MIT",
   "dependencies": {
-    "@fluent/bundle": "^0.14.0",
-    "@fluent/react": "^0.10.0",
-    "@types/chrome": "0.0.89",
-    "@types/fluent__bundle": "^0.14.1",
-    "@types/fluent__react": "^0.10.0",
-    "@types/react": "^16.9.13",
-    "@types/react-dom": "^16.9.4",
-    "deepmerge": "^4.2.2",
-    "node-html-parser": "^1.1.16",
-    "preact": "^10.0.5",
-    "typescript": "^3.6.3"
+    "@fluent/bundle": "^0.17.1",
+    "@fluent/react": "^0.15.0",
+    "@types/chrome": "0.0.224",
+    "@types/react": "^16.14.35",
+    "@types/react-dom": "^16.9.18",
+    "deepmerge": "^4.3.1",
+    "node-html-parser": "^6.1.5",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
+    "typescript": "^4.9.5"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^2.9.0",
-    "@typescript-eslint/parser": "^2.9.0",
-    "archiver": "^3.1.1",
-    "eslint": "^6.7.1",
-    "eslint-config-react-app": "^5.0.2",
-    "eslint-plugin-flowtype": "^4.5.2",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.16.0",
-    "eslint-plugin-react-hooks": "^2.3.0",
-    "husky": "^3.1.0",
-    "less": "^3.10.3",
-    "lint-staged": "^9.5.0",
-    "parcel": "^1.12.4"
-  },
-  "alias": {
-    "react": "preact/compat",
-    "react-dom": "preact/compat"
+    "archiver": "^5.3.1",
+    "eslint": "^8.36.0",
+    "eslint-config-react-app": "^7.0.1",
+    "husky": "^8.0.3",
+    "less": "^4.1.3",
+    "lint-staged": "^13.2.0",
+    "parcel": "^2.8.3",
+    "parcel-resolver-ts-base-url": "^1.3.1"
   },
   "browserslist": [
     "last 2 Chrome versions"
@@ -59,5 +47,19 @@
   "lint-staged": {
     "*.ts": "eslint",
     "*.tsx": "eslint"
+  },
+  "pnpm": {
+    "packageExtensions": {
+      "eslint-plugin-flowtype": {
+        "peerDependenciesMeta": {
+          "@babel/plugin-syntax-flow": {
+            "optional": true
+          },
+          "@babel/plugin-transform-react-jsx": {
+            "optional": true
+          }
+        }
+      }
+    }
   }
 }

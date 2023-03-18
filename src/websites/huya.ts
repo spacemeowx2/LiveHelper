@@ -1,5 +1,5 @@
 import { registerWebSite, Living, PollError, PollErrorType } from '../types'
-import { mapFilter } from '~/utils'
+import { mapFilter } from 'utils'
 
 interface Room {
   isLive: boolean
@@ -20,7 +20,7 @@ interface UidResponse {
   uid: string
 }
 
-function getInfoFromItem ({
+function getInfoFromItem({
   profileRoom,
   intro,
   startTime,
@@ -34,19 +34,19 @@ function getInfoFromItem ({
     author: nick,
     online: totalCount,
     preview: screenshot,
-    url: 'https://www.huya.com/' + profileRoom
+    url: `https://www.huya.com/${profileRoom}`
   }
 }
 
 registerWebSite({
-  async getLiving () {
-    const { isLogined, uid }: UidResponse = await (await fetch(`https://www.huya.com/udb_web/checkLogin.php`)).json()
+  async getLiving() {
+    const { isLogined, uid }: UidResponse = await (await fetch("https://www.huya.com/udb_web/checkLogin.php")).json()
 
     if (!isLogined) {
       throw new PollError(PollErrorType.NotLogin)
     }
 
-    const r = await fetch(`https://fw.huya.com/dispatch?do=subscribeList&uid=${uid}&page=1&pageSize=100&_=${+new Date}`)
+    const r = await fetch(`https://fw.huya.com/dispatch?do=subscribeList&uid=${uid}&page=1&pageSize=100&_=${+new Date()}`)
     const res: Response = await r.json()
 
     return mapFilter(res.result.list.filter(i => i.isLive), getInfoFromItem)
