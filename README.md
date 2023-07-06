@@ -4,6 +4,8 @@
 
 ## 安装  
 
-[Chrome商店](https://chrome.google.com/webstore/detail/kaiofkekiongfpgocmlpomimfnmcnfii)  
+[Chrome商店](https://chrome.google.com/webstore/detail/kaiofkekiongfpgocmlpomimfnmcnfii)
+
 [Firefox商店](https://addons.mozilla.org/en-US/firefox/addon/live-helper/)
+
 [Edge商店](https://microsoftedge.microsoft.com/addons/detail/bhofaknalkegohfhkclndiccnpdmjhfg)
