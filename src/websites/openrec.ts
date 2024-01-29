@@ -1,5 +1,5 @@
 import { registerWebSite, Living, PollError, PollErrorType } from '../types'
-import { mapFilter, getCookie } from 'utils'
+import { mapFilter, getCookie } from '~/src/utils'
 
 interface Room {
   // title
@@ -47,7 +47,7 @@ registerWebSite({
     if (!Uuid || !Random || !Token) {
       throw new PollError(PollErrorType.NotLogin)
     }
-    const url = ['https:', '', 'www.openrec.tv', 'viewapp', 'api', 'v3', 'user', 'myfeed?page_number=1'].join('/')
+    const url = ['https:', '', 'www.openrec.tv', 'viewapp', 'api', 'v3', 'user', 'myfeed?page_number=1'].join('~/src/')
     const res: Response = await (await fetch(url, {
       headers: {
         'x-openrec-agent': 'APP',

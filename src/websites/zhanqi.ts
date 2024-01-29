@@ -1,5 +1,5 @@
 import { registerWebSite, Living, PollError, PollErrorType } from '../types'
-import { mapFilter } from 'utils'
+import { mapFilter } from '~/src/utils'
 
 interface Room {
   roomUrl: string

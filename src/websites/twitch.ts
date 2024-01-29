@@ -1,5 +1,5 @@
 import { registerWebSite, Living, PollError, PollErrorType } from '../types'
-import { mapFilter, getCookie } from 'utils'
+import { mapFilter, getCookie } from '~/src/utils'
 
 const ClientId = 'kimne78kx3ncx6brgo4mv6wki5h1ko'
 const GqlRequest = `[{"operationName":"FollowedIndex_CurrentUser","variables":{"limit":30},"extensions":{"persistedQuery":{"version":1,"sha256Hash":"181e1c51a951f4cc0dc54e13d3c4dbde6d9bf4ecbd4724d753ddb1794ab055d6"}}}]`

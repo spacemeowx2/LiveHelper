@@ -1,19 +1,16 @@
 import React from 'react'
-import { FluentBundle, FluentResource, FluentNumber } from '@fluent/bundle'
+import { FluentBundle, FluentResource, FluentNumber, FluentFunction, FluentValue } from '@fluent/bundle'
 import { LocalizationProvider as LP } from '@fluent/react'
 import zh_CN from './zh_CN'
-import { Maybe, maybeHas } from 'types'
+import { Maybe, maybeHas } from '~/src/types'
 
-interface FluentValue<T> {
-  value: T
-}
 const LangMap: Record<string, string> = {
   'zh-CN': zh_CN
 }
 const BundleMap: Record<string, FluentBundle> = {}
 const Langs = ['zh-CN']
-const functions = {
-  DIV([a, b]: FluentValue<number>[]) {
+const functions: Record<string, FluentFunction> = {
+  DIV([a, b]: FluentValue[]) {
     return new FluentNumber(a.value / b.value)
   },
   STRLEN([str]: FluentValue<string>[]) {

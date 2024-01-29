@@ -1,5 +1,5 @@
 import { Living, CacheItem, CacheError, PollError, PollErrorType } from './types'
-import { LocalMap, now } from 'utils'
+import { LocalMap, now } from './utils'
 import * as config from './config'
 
 enum From {

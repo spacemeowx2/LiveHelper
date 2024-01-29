@@ -1,5 +1,5 @@
 import { registerWebSite, Living, PollError, PollErrorType } from '../types'
-import { mapFilter, parseViews } from 'utils'
+import { mapFilter, parseViews } from '~/src/utils'
 
 interface Item {
   room_id: number
