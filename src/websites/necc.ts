@@ -1,5 +1,5 @@
 import { registerWebSite, Living, PollError, PollErrorType } from '../types'
-import { mapFilter } from '~/utils'
+import { mapFilter } from '~/src/utils'
 
 interface Room {
   title: string
@@ -13,7 +13,7 @@ interface Response {
   follow_list: Room[]
 }
 
-function getInfoFromItem ({
+function getInfoFromItem({
   title,
   cover,
   nickname,
@@ -31,8 +31,8 @@ function getInfoFromItem ({
 }
 
 registerWebSite({
-  async getLiving () {
-    const url = `https://cc.163.com/user/follow/?format=json&page=1&size=100`
+  async getLiving() {
+    const url = "https://cc.163.com/user/follow/?format=json&page=1&size=100"
     const r = await fetch(url)
     if (r.url !== url) {
       throw new PollError(PollErrorType.NotLogin)

@@ -1,5 +1,5 @@
 import { registerWebSite, Living, PollError, PollErrorType } from '../types'
-import { mapFilter } from '~/utils'
+import { mapFilter } from '~/src/utils'
 
 interface Room {
   roomUrl: string
@@ -16,7 +16,7 @@ interface Response {
   }
 }
 
-function getInfoFromItem ({
+function getInfoFromItem({
   title,
   nickname,
   online,
@@ -34,7 +34,7 @@ function getInfoFromItem ({
 }
 
 registerWebSite({
-  async getLiving () {
+  async getLiving() {
     const r = await fetch(`https://www.zhanqi.tv/api/user/follow.listsbypage?page=1&nums=100`)
     const res: Response = await r.json()
 

@@ -1,5 +1,5 @@
 import { registerWebSite, Living, PollError, PollErrorType } from '../types'
-import { mapFilter } from '~/utils'
+import { mapFilter } from '~/src/utils'
 
 interface Room {
   title: string
@@ -17,7 +17,7 @@ interface Response {
   need_login?: number
 }
 
-function getInfoFromItem ({
+function getInfoFromItem({
   title,
   liveTime,
   nickname,
@@ -36,8 +36,8 @@ function getInfoFromItem ({
 }
 
 registerWebSite({
-  async getLiving () {
-    const r = await fetch(`https://api.live.bilibili.com/xlive/web-ucenter/v1/xfetter/GetWebList?page=1&page_size=10`)
+  async getLiving() {
+    const r = await fetch("https://api.live.bilibili.com/xlive/web-ucenter/v1/xfetter/GetWebList?page=1&page_size=10")
     const res: Response = await r.json()
 
     // not login

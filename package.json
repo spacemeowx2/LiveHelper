@@ -2,11 +2,10 @@
   "name": "livehelper",
   "version": "2.0.5",
   "description": "帮你整合多个直播网站的关注列表",
-  "main": "build/index.js",
   "scripts": {
-    "build": "node build/build.js",
-    "watch": "parcel watch src/*.html src/background.ts --public-url ./ --no-hmr",
-    "lint": "eslint './src/**/*.{ts,tsx}'",
+    "build": "parcel build manifest.json",
+    "watch": "parcel watch manifest.json",
+    "lint": "eslint --max-warnings=0 src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,37 +15,29 @@
   "author": "space",
   "license": "MIT",
   "dependencies": {
-    "@fluent/bundle": "^0.14.0",
-    "@fluent/react": "^0.10.0",
-    "@types/chrome": "0.0.89",
-    "@types/fluent__bundle": "^0.14.1",
-    "@types/fluent__react": "^0.10.0",
-    "@types/react": "^16.9.13",
-    "@types/react-dom": "^16.9.4",
-    "deepmerge": "^4.2.2",
-    "node-html-parser": "^1.1.16",
-    "preact": "^10.0.5",
-    "typescript": "^3.6.3"
+    "@fluent/bundle": "^0.18.0",
+    "@fluent/react": "^0.15.2",
+    "@types/chrome": "0.0.256",
+    "@types/react": "^16.14.56",
+    "@types/react-dom": "^16.9.24",
+    "deepmerge": "^4.3.1",
+    "node-html-parser": "^6.1.12",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.3.3"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^2.9.0",
-    "@typescript-eslint/parser": "^2.9.0",
-    "archiver": "^3.1.1",
-    "eslint": "^6.7.1",
-    "eslint-config-react-app": "^5.0.2",
-    "eslint-plugin-flowtype": "^4.5.2",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.16.0",
-    "eslint-plugin-react-hooks": "^2.3.0",
-    "husky": "^3.1.0",
-    "less": "^3.10.3",
-    "lint-staged": "^9.5.0",
-    "parcel": "^1.12.4"
-  },
-  "alias": {
-    "react": "preact/compat",
-    "react-dom": "preact/compat"
+    "@parcel/config-webextension": "^2.11.0",
+    "@parcel/core": "^2.11.0",
+    "@parcel/plugin": "^2.11.0",
+    "archiver": "^6.0.1",
+    "eslint": "^8.56.0",
+    "eslint-config-react-app": "^7.0.1",
+    "husky": "^8.0.3",
+    "less": "^4.2.0",
+    "lint-staged": "^15.2.0",
+    "parcel": "^2.11.0",
+    "parcel-resolver-ts-base-url": "^1.3.1"
   },
   "browserslist": [
     "last 2 Chrome versions"
@@ -59,5 +50,26 @@
   "lint-staged": {
     "*.ts": "eslint",
     "*.tsx": "eslint"
+  },
+  "eslintConfig": {
+    "extends": "react-app",
+    "ignorePatterns": [
+      "build",
+      "dist"
+    ]
+  },
+  "pnpm": {
+    "packageExtensions": {
+      "eslint-plugin-flowtype": {
+        "peerDependenciesMeta": {
+          "@babel/plugin-syntax-flow": {
+            "optional": true
+          },
+          "@babel/plugin-transform-react-jsx": {
+            "optional": true
+          }
+        }
+      }
+    }
   }
 }

@@ -1,28 +1,25 @@
 import React from 'react'
-import { FluentBundle, FluentResource, FluentNumber } from '@fluent/bundle'
+import { FluentBundle, FluentResource, FluentNumber, FluentFunction, FluentValue } from '@fluent/bundle'
 import { LocalizationProvider as LP } from '@fluent/react'
 import zh_CN from './zh_CN'
-import { Maybe, maybeHas } from '~/types'
+import { Maybe, maybeHas } from '~/src/types'
 
-interface FluentValue<T> {
-  value: T
-}
 const LangMap: Record<string, string> = {
   'zh-CN': zh_CN
 }
 const BundleMap: Record<string, FluentBundle> = {}
 const Langs = ['zh-CN']
-const functions = {
-  DIV ([a, b]: FluentValue<number>[]) {
+const functions: Record<string, FluentFunction> = {
+  DIV([a, b]: FluentValue[]) {
     return new FluentNumber(a.value / b.value)
   },
-  STRLEN ([str]: FluentValue<string>[]) {
+  STRLEN([str]: FluentValue<string>[]) {
     return new FluentNumber(str.value.toString().length)
   },
-  MINUS ([a, b]: FluentValue<number>[]) {
+  MINUS([a, b]: FluentValue<number>[]) {
     return a.value - b.value
   },
-  CMP ([a, b]: FluentValue<number>[]) {
+  CMP([a, b]: FluentValue<number>[]) {
     if (a.value === b.value) {
       return 'EQ'
     } else if (a.value > b.value) {
@@ -31,10 +28,10 @@ const functions = {
       return 'LT'
     }
   },
-  STR ([n]: FluentValue<number>[]) {
+  STR([n]: FluentValue<number>[]) {
     return n.value.toString()
   },
-  MAYBE_HAS ([n]: FluentValue<Maybe<any>>[]) {
+  MAYBE_HAS([n]: FluentValue<Maybe<any>>[]) {
     return maybeHas(n.value) ? 'has' : 'none'
   }
 }

@@ -1,5 +1,5 @@
 import { registerWebSite, Living, PollError, PollErrorType } from '../types'
-import { mapFilter } from '~/utils'
+import { mapFilter } from '~/src/utils'
 
 interface Room {
   room: {
@@ -18,7 +18,7 @@ interface Response {
   items: Room[]
 }
 
-function getInfoFromItem ({
+function getInfoFromItem({
   room: {
     name
   },
@@ -41,11 +41,11 @@ function getInfoFromItem ({
 }
 
 registerWebSite({
-  async getLiving () {
-    const r = await fetch(`https://userapi.longzhu.com/subinfo/mysubscribe?pageIndex=0&pageSize=100&isLive=1`)
+  async getLiving() {
+    const r = await fetch("https://userapi.longzhu.com/subinfo/mysubscribe?pageIndex=0&pageSize=100&isLive=1")
     const res: Response = await r.json()
     if (res.totalItems === 0) {
-      const user: { uid: number } = await (await fetch(`https://userapi.longzhu.com/user/getcurrentuserprofile`)).json()
+      const user: { uid: number } = await (await fetch("https://userapi.longzhu.com/user/getcurrentuserprofile")).json()
       if (user.uid === -1) {
         throw new PollError(PollErrorType.NotLogin)
       }

@@ -1,5 +1,5 @@
 import { registerWebSite, Living, PollError, PollErrorType } from '../types'
-import { mapFilter, parseViews } from '~/utils'
+import { mapFilter, parseViews } from '~/src/utils'
 
 interface Item {
   room_id: number
@@ -40,22 +40,22 @@ type Response = {
   error: -1
 }
 
-function getInfoFromItem (item: Item): Living | undefined {
+function getInfoFromItem(item: Item): Living | undefined {
   if (item.videoLoop === 1 || item.show_status !== 1) {
     return
   }
   return {
-      title: item.room_name,
-      startAt: item.show_time,
-      author: item.nickname,
-      online: parseViews(item.online),
-      preview: item.room_src,
-      url: 'https://www.douyu.com/' + item.room_id
+    title: item.room_name,
+    startAt: item.show_time,
+    author: item.nickname,
+    online: parseViews(item.online),
+    preview: item.room_src,
+    url: `https://www.douyu.com/${item.room_id}`
   }
 }
 
 registerWebSite({
-  async getLiving () {
+  async getLiving() {
     const r: Response = await (await fetch('https://www.douyu.com/wgapi/livenc/liveweb/follow/list?sort=0&cid1=0')).json()
     if (r.error === -1) {
       throw new PollError(PollErrorType.NotLogin)
